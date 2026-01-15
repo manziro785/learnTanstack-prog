@@ -2,3 +2,6 @@ export { MainPage } from "./MainPage";
 export { PostsPage } from "./PostsPage";
 export { AuthPage } from "./AuthPage";
 export { AboutPage } from "./AboutPage";
+export { ProfilePage } from "./ProfilePage";
+export { Followers } from "./Followers";
+export { Following } from "./Following";

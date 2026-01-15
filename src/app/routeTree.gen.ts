@@ -11,86 +11,136 @@
 import { createFileRoute } from '@tanstack/react-router'
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as IndexRouteImport } from './routes/index'
-import { Route as PostsPostIdRouteImport } from './routes/posts/$postId'
+import { Route as AuthRouteImport } from './routes/auth'
+import { Route as LayoutRouteImport } from './routes/_layout'
+import { Route as LayoutIndexRouteImport } from './routes/_layout/index'
+import { Route as LayoutFollowingRouteImport } from './routes/_layout/following'
+import { Route as LayoutFollowersRouteImport } from './routes/_layout/followers'
+import { Route as LayoutProfileIndexRouteImport } from './routes/_layout/profile/index'
+import { Route as LayoutPostsPostIdRouteImport } from './routes/_layout/posts/$postId'
+import { Route as LayoutCommentsPostIdRouteImport } from './routes/_layout/comments/$postId'
 
-const AuthLazyRouteImport = createFileRoute('/auth')()
 const AboutLazyRouteImport = createFileRoute('/about')()
-const PostsIndexLazyRouteImport = createFileRoute('/posts/')()
 
-const AuthLazyRoute = AuthLazyRouteImport.update({
-  id: '/auth',
-  path: '/auth',
-  getParentRoute: () => rootRouteImport,
-} as any).lazy(() => import('./routes/auth.lazy').then((d) => d.Route))
 const AboutLazyRoute = AboutLazyRouteImport.update({
   id: '/about',
   path: '/about',
   getParentRoute: () => rootRouteImport,
 } as any).lazy(() => import('./routes/about.lazy').then((d) => d.Route))
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
   getParentRoute: () => rootRouteImport,
 } as any)
-const PostsIndexLazyRoute = PostsIndexLazyRouteImport.update({
-  id: '/posts/',
-  path: '/posts/',
+const LayoutRoute = LayoutRouteImport.update({
+  id: '/_layout',
   getParentRoute: () => rootRouteImport,
-} as any).lazy(() => import('./routes/posts/index.lazy').then((d) => d.Route))
-const PostsPostIdRoute = PostsPostIdRouteImport.update({
+} as any)
+const LayoutIndexRoute = LayoutIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => LayoutRoute,
+} as any)
+const LayoutFollowingRoute = LayoutFollowingRouteImport.update({
+  id: '/following',
+  path: '/following',
+  getParentRoute: () => LayoutRoute,
+} as any)
+const LayoutFollowersRoute = LayoutFollowersRouteImport.update({
+  id: '/followers',
+  path: '/followers',
+  getParentRoute: () => LayoutRoute,
+} as any)
+const LayoutProfileIndexRoute = LayoutProfileIndexRouteImport.update({
+  id: '/profile/',
+  path: '/profile/',
+  getParentRoute: () => LayoutRoute,
+} as any)
+const LayoutPostsPostIdRoute = LayoutPostsPostIdRouteImport.update({
   id: '/posts/$postId',
   path: '/posts/$postId',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => LayoutRoute,
+} as any)
+const LayoutCommentsPostIdRoute = LayoutCommentsPostIdRouteImport.update({
+  id: '/comments/$postId',
+  path: '/comments/$postId',
+  getParentRoute: () => LayoutRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
   '/about': typeof AboutLazyRoute
-  '/auth': typeof AuthLazyRoute
-  '/posts/$postId': typeof PostsPostIdRoute
-  '/posts': typeof PostsIndexLazyRoute
+  '/followers': typeof LayoutFollowersRoute
+  '/following': typeof LayoutFollowingRoute
+  '/': typeof LayoutIndexRoute
+  '/comments/$postId': typeof LayoutCommentsPostIdRoute
+  '/posts/$postId': typeof LayoutPostsPostIdRoute
+  '/profile': typeof LayoutProfileIndexRoute
 }
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
   '/about': typeof AboutLazyRoute
-  '/auth': typeof AuthLazyRoute
-  '/posts/$postId': typeof PostsPostIdRoute
-  '/posts': typeof PostsIndexLazyRoute
+  '/followers': typeof LayoutFollowersRoute
+  '/following': typeof LayoutFollowingRoute
+  '/': typeof LayoutIndexRoute
+  '/comments/$postId': typeof LayoutCommentsPostIdRoute
+  '/posts/$postId': typeof LayoutPostsPostIdRoute
+  '/profile': typeof LayoutProfileIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/': typeof IndexRoute
+  '/_layout': typeof LayoutRouteWithChildren
+  '/auth': typeof AuthRoute
   '/about': typeof AboutLazyRoute
-  '/auth': typeof AuthLazyRoute
-  '/posts/$postId': typeof PostsPostIdRoute
-  '/posts/': typeof PostsIndexLazyRoute
+  '/_layout/followers': typeof LayoutFollowersRoute
+  '/_layout/following': typeof LayoutFollowingRoute
+  '/_layout/': typeof LayoutIndexRoute
+  '/_layout/comments/$postId': typeof LayoutCommentsPostIdRoute
+  '/_layout/posts/$postId': typeof LayoutPostsPostIdRoute
+  '/_layout/profile/': typeof LayoutProfileIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/auth' | '/posts/$postId' | '/posts'
+  fullPaths:
+    | '/auth'
+    | '/about'
+    | '/followers'
+    | '/following'
+    | '/'
+    | '/comments/$postId'
+    | '/posts/$postId'
+    | '/profile'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/auth' | '/posts/$postId' | '/posts'
-  id: '__root__' | '/' | '/about' | '/auth' | '/posts/$postId' | '/posts/'
+  to:
+    | '/auth'
+    | '/about'
+    | '/followers'
+    | '/following'
+    | '/'
+    | '/comments/$postId'
+    | '/posts/$postId'
+    | '/profile'
+  id:
+    | '__root__'
+    | '/_layout'
+    | '/auth'
+    | '/about'
+    | '/_layout/followers'
+    | '/_layout/following'
+    | '/_layout/'
+    | '/_layout/comments/$postId'
+    | '/_layout/posts/$postId'
+    | '/_layout/profile/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
+  LayoutRoute: typeof LayoutRouteWithChildren
+  AuthRoute: typeof AuthRoute
   AboutLazyRoute: typeof AboutLazyRoute
-  AuthLazyRoute: typeof AuthLazyRoute
-  PostsPostIdRoute: typeof PostsPostIdRoute
-  PostsIndexLazyRoute: typeof PostsIndexLazyRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/auth': {
-      id: '/auth'
-      path: '/auth'
-      fullPath: '/auth'
-      preLoaderRoute: typeof AuthLazyRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/about': {
       id: '/about'
       path: '/about'
@@ -98,36 +148,90 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AboutLazyRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/': {
-      id: '/'
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_layout': {
+      id: '/_layout'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof LayoutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_layout/': {
+      id: '/_layout/'
       path: '/'
       fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof LayoutIndexRouteImport
+      parentRoute: typeof LayoutRoute
     }
-    '/posts/': {
-      id: '/posts/'
-      path: '/posts'
-      fullPath: '/posts'
-      preLoaderRoute: typeof PostsIndexLazyRouteImport
-      parentRoute: typeof rootRouteImport
+    '/_layout/following': {
+      id: '/_layout/following'
+      path: '/following'
+      fullPath: '/following'
+      preLoaderRoute: typeof LayoutFollowingRouteImport
+      parentRoute: typeof LayoutRoute
     }
-    '/posts/$postId': {
-      id: '/posts/$postId'
+    '/_layout/followers': {
+      id: '/_layout/followers'
+      path: '/followers'
+      fullPath: '/followers'
+      preLoaderRoute: typeof LayoutFollowersRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/profile/': {
+      id: '/_layout/profile/'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof LayoutProfileIndexRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/posts/$postId': {
+      id: '/_layout/posts/$postId'
       path: '/posts/$postId'
       fullPath: '/posts/$postId'
-      preLoaderRoute: typeof PostsPostIdRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof LayoutPostsPostIdRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/comments/$postId': {
+      id: '/_layout/comments/$postId'
+      path: '/comments/$postId'
+      fullPath: '/comments/$postId'
+      preLoaderRoute: typeof LayoutCommentsPostIdRouteImport
+      parentRoute: typeof LayoutRoute
     }
   }
 }
 
+interface LayoutRouteChildren {
+  LayoutFollowersRoute: typeof LayoutFollowersRoute
+  LayoutFollowingRoute: typeof LayoutFollowingRoute
+  LayoutIndexRoute: typeof LayoutIndexRoute
+  LayoutCommentsPostIdRoute: typeof LayoutCommentsPostIdRoute
+  LayoutPostsPostIdRoute: typeof LayoutPostsPostIdRoute
+  LayoutProfileIndexRoute: typeof LayoutProfileIndexRoute
+}
+
+const LayoutRouteChildren: LayoutRouteChildren = {
+  LayoutFollowersRoute: LayoutFollowersRoute,
+  LayoutFollowingRoute: LayoutFollowingRoute,
+  LayoutIndexRoute: LayoutIndexRoute,
+  LayoutCommentsPostIdRoute: LayoutCommentsPostIdRoute,
+  LayoutPostsPostIdRoute: LayoutPostsPostIdRoute,
+  LayoutProfileIndexRoute: LayoutProfileIndexRoute,
+}
+
+const LayoutRouteWithChildren =
+  LayoutRoute._addFileChildren(LayoutRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
-  IndexRoute: IndexRoute,
+  LayoutRoute: LayoutRouteWithChildren,
+  AuthRoute: AuthRoute,
   AboutLazyRoute: AboutLazyRoute,
-  AuthLazyRoute: AuthLazyRoute,
-  PostsPostIdRoute: PostsPostIdRoute,
-  PostsIndexLazyRoute: PostsIndexLazyRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

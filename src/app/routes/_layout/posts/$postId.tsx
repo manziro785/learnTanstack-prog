@@ -1,10 +1,12 @@
+import requireAuth from "@/shared/lib/guards/require-auth";
 import { createFileRoute } from "@tanstack/react-router";
 
 type PageParams = {
   page: number;
 };
 
-export const Route = createFileRoute("/posts/$postId")({
+export const Route = createFileRoute("/_layout/posts/$postId")({
+  beforeLoad: requireAuth,
   component: PostCurrent,
   validateSearch: (search: Record<string, unknown>): PageParams => {
     return {
