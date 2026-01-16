@@ -1,13 +1,7 @@
-import { Post } from "@/widgets";
+import Posts from "@/widgets/Post/ui/Posts";
 
 const MainPage = () => {
-  return (
-    <div>
-      <Post />
-      <Post />
-      <Post />
-    </div>
-  );
+  return <Posts />;
 };
 
 export { MainPage };

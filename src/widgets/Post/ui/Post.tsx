@@ -1,45 +1,45 @@
-import { Avatar } from "@radix-ui/themes";
-import img from "../assets/download.jpeg";
 import { ArrowDownToLine, Heart, MessageCircle } from "lucide-react";
+import type { PostProps } from "../model/post.types";
 
-const Post = () => {
+const Post = ({ post }: PostProps) => {
+  const formatted = new Intl.DateTimeFormat("en-GB", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: true,
+  }).format(new Date(post.created_at));
   return (
-    <div className="border-1 border-gray-500 rounded-[10px] max-w-[700px] mb-[30px]">
+    <div
+      key={post.key}
+      className="border-2 border-[#161616] bg-[#161616] rounded-[10px] max-w-[700px] mb-[30px]"
+    >
       <img
-        src={img}
+        src={post.image_url}
         className="w-full max-w-[700px] max-h-[400px] object-cover rounded-tl-[10px] rounded-tr-[10px]"
       />
       <div className="p-[30px] flex gap-x-[20px]">
-        <Avatar
-          src="https://images.unsplash.com/photo-1502823403499-6ccfcf4fb453?&w=256&h=256&q=70&crop=focalpoint&fp-x=0.5&fp-y=0.3&fp-z=1&fit=crop"
-          fallback="A"
-        />
-        <div>
-          <div>
-            <h3 className="mt-[0px]">Title smt like gaaauuu</h3>
-            <p>
-              It is a long established fact that a reader will be distracted by
-              the readable content of a page when looking at its layout. The
-              point of using Lorem Ipsum is that it has a more-or-less normal
-              distribution of letters, as opposed to using 'Content here,
-              content here', making it look like readable English. Many desktop
-              publishing packages and web page editors now use Lorem Ipsum as
-              their
-            </p>
-            <p className="mb-[2rem]">3/12/2020, 21:11 AM</p>
+        <div className="w-full">
+          <p className="mt-[0px]">{post.caption}</p>
+          <p className="mb-[2rem] text-gray-400 text-sm mt-2">{formatted}</p>
+          <div className="flex justify-between w-[100%]">
             <div className="flex gap-x-[15px]">
-              <div className="flex gap-x-[5px]">
-                <Heart /> 10
+              <div className="flex gap-x-[5px] cursor-pointer hover:text-red-300 duration-200 ease-in-out">
+                <Heart className="" /> {post.likes_count}
               </div>
-              <div className="flex gap-x-[5px]">
+              <div className="flex gap-x-[5px] cursor-pointer hover:text-blue-300 duration-200 ease-in-out">
                 {" "}
-                <MessageCircle /> 0
+                <MessageCircle /> {post.comments_count}
               </div>
-              <div className="flex gap-x-[5px]">
+              <div className="flex gap-x-[5px] cursor-pointer">
                 {" "}
-                <ArrowDownToLine /> 2
+                <ArrowDownToLine />
               </div>
             </div>
+            <p className="text-gray-400 cursor-pointer hover:text-gray-100 duration-200 ease-in-out">
+              @ {post.username}
+            </p>
           </div>
         </div>
       </div>

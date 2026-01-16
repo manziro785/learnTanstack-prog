@@ -14,3 +14,13 @@ export const fetchRegister = async (
   const res = await api.post("/api/auth/register", userData);
   return res.data;
 };
+
+export const fetchGoogleAuth = async (googleData: {
+  email: string;
+  username: string;
+  googleId: string;
+  picture?: string;
+}): Promise<AuthResponse> => {
+  const res = await api.post("/api/auth/google", googleData);
+  return res.data;
+};

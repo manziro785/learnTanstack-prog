@@ -82,7 +82,7 @@ export default function AuthForm({ tab }: AuthFormProps) {
         <button
           type="submit"
           disabled={isSubmitting}
-          className="w-full bg-blue-600 hover:bg-blue-700 py-2.5 rounded-lg text-white font-semibold"
+          className="flex justify-center w-full bg-blue-600 hover:bg-blue-700 py-2.5 rounded-lg text-white font-semibold"
         >
           {isSubmitting ? (
             <Spinner />

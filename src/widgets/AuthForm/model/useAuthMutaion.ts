@@ -1,5 +1,5 @@
 import { useMutation } from "@tanstack/react-query";
-import { fetchLogin, fetchRegister } from "../api/auth";
+import { fetchLogin, fetchRegister, fetchGoogleAuth } from "../api/auth";
 import { useAuthStore } from "./auth.store";
 import { useNavigate } from "@tanstack/react-router";
 import type { AuthResponse, LoginUser, RegisterUser } from "./auth";
@@ -9,12 +9,13 @@ export const useAuth = () => {
 
   const handleSuccess = (data: AuthResponse) => {
     useAuthStore.getState().setToken(data.token);
+    localStorage.setItem("token", data.token);
     navigate({ to: "/" });
   };
 
   const handleError = (error: unknown) => {
     const msg = error instanceof Error ? error.message : String(error);
-    console.log(msg);
+    console.error(msg);
   };
 
   const loginMutation = useMutation({
@@ -25,6 +26,17 @@ export const useAuth = () => {
 
   const registerMutation = useMutation({
     mutationFn: (params: RegisterUser) => fetchRegister(params),
+    onSuccess: handleSuccess,
+    onError: handleError,
+  });
+
+  const googleAuthMutation = useMutation({
+    mutationFn: (params: {
+      email: string;
+      username: string;
+      googleId: string;
+      picture?: string;
+    }) => fetchGoogleAuth(params),
     onSuccess: handleSuccess,
     onError: handleError,
   });
@@ -40,8 +52,32 @@ export const useAuth = () => {
     }
   };
 
+  const submitGoogleAuth = async (credential: string) => {
+    const { jwtDecode } = await import("jwt-decode");
+
+    interface GoogleUser {
+      email: string;
+      name: string;
+      picture?: string;
+      sub: string;
+    }
+
+    const decoded: GoogleUser = jwtDecode(credential);
+
+    return googleAuthMutation.mutateAsync({
+      email: decoded.email,
+      username: decoded.name,
+      googleId: decoded.sub,
+      picture: decoded.picture,
+    });
+  };
+
   return {
     submitAuth,
-    isLoading: loginMutation.isPending || registerMutation.isPending,
+    submitGoogleAuth,
+    isLoading:
+      loginMutation.isPending ||
+      registerMutation.isPending ||
+      googleAuthMutation.isPending,
   };
 };

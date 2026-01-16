@@ -14,6 +14,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as LayoutRouteImport } from './routes/_layout'
 import { Route as LayoutIndexRouteImport } from './routes/_layout/index'
+import { Route as LayoutSearchRouteImport } from './routes/_layout/search'
 import { Route as LayoutFollowingRouteImport } from './routes/_layout/following'
 import { Route as LayoutFollowersRouteImport } from './routes/_layout/followers'
 import { Route as LayoutProfileIndexRouteImport } from './routes/_layout/profile/index'
@@ -39,6 +40,11 @@ const LayoutRoute = LayoutRouteImport.update({
 const LayoutIndexRoute = LayoutIndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => LayoutRoute,
+} as any)
+const LayoutSearchRoute = LayoutSearchRouteImport.update({
+  id: '/search',
+  path: '/search',
   getParentRoute: () => LayoutRoute,
 } as any)
 const LayoutFollowingRoute = LayoutFollowingRouteImport.update({
@@ -72,6 +78,7 @@ export interface FileRoutesByFullPath {
   '/about': typeof AboutLazyRoute
   '/followers': typeof LayoutFollowersRoute
   '/following': typeof LayoutFollowingRoute
+  '/search': typeof LayoutSearchRoute
   '/': typeof LayoutIndexRoute
   '/comments/$postId': typeof LayoutCommentsPostIdRoute
   '/posts/$postId': typeof LayoutPostsPostIdRoute
@@ -82,6 +89,7 @@ export interface FileRoutesByTo {
   '/about': typeof AboutLazyRoute
   '/followers': typeof LayoutFollowersRoute
   '/following': typeof LayoutFollowingRoute
+  '/search': typeof LayoutSearchRoute
   '/': typeof LayoutIndexRoute
   '/comments/$postId': typeof LayoutCommentsPostIdRoute
   '/posts/$postId': typeof LayoutPostsPostIdRoute
@@ -94,6 +102,7 @@ export interface FileRoutesById {
   '/about': typeof AboutLazyRoute
   '/_layout/followers': typeof LayoutFollowersRoute
   '/_layout/following': typeof LayoutFollowingRoute
+  '/_layout/search': typeof LayoutSearchRoute
   '/_layout/': typeof LayoutIndexRoute
   '/_layout/comments/$postId': typeof LayoutCommentsPostIdRoute
   '/_layout/posts/$postId': typeof LayoutPostsPostIdRoute
@@ -106,6 +115,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/followers'
     | '/following'
+    | '/search'
     | '/'
     | '/comments/$postId'
     | '/posts/$postId'
@@ -116,6 +126,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/followers'
     | '/following'
+    | '/search'
     | '/'
     | '/comments/$postId'
     | '/posts/$postId'
@@ -127,6 +138,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/_layout/followers'
     | '/_layout/following'
+    | '/_layout/search'
     | '/_layout/'
     | '/_layout/comments/$postId'
     | '/_layout/posts/$postId'
@@ -167,6 +179,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof LayoutIndexRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/search': {
+      id: '/_layout/search'
+      path: '/search'
+      fullPath: '/search'
+      preLoaderRoute: typeof LayoutSearchRouteImport
       parentRoute: typeof LayoutRoute
     }
     '/_layout/following': {
@@ -210,6 +229,7 @@ declare module '@tanstack/react-router' {
 interface LayoutRouteChildren {
   LayoutFollowersRoute: typeof LayoutFollowersRoute
   LayoutFollowingRoute: typeof LayoutFollowingRoute
+  LayoutSearchRoute: typeof LayoutSearchRoute
   LayoutIndexRoute: typeof LayoutIndexRoute
   LayoutCommentsPostIdRoute: typeof LayoutCommentsPostIdRoute
   LayoutPostsPostIdRoute: typeof LayoutPostsPostIdRoute
@@ -219,6 +239,7 @@ interface LayoutRouteChildren {
 const LayoutRouteChildren: LayoutRouteChildren = {
   LayoutFollowersRoute: LayoutFollowersRoute,
   LayoutFollowingRoute: LayoutFollowingRoute,
+  LayoutSearchRoute: LayoutSearchRoute,
   LayoutIndexRoute: LayoutIndexRoute,
   LayoutCommentsPostIdRoute: LayoutCommentsPostIdRoute,
   LayoutPostsPostIdRoute: LayoutPostsPostIdRoute,

@@ -5,3 +5,4 @@ export { AboutPage } from "./AboutPage";
 export { ProfilePage } from "./ProfilePage";
 export { Followers } from "./Followers";
 export { Following } from "./Following";
+export { SearchPage } from "./SearchPage";
