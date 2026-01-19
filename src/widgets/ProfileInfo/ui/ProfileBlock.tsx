@@ -1,22 +1,23 @@
-import { Avatar, Button } from "@radix-ui/themes";
+import { Avatar, Spinner } from "@radix-ui/themes";
 import { useGetProfileQuery } from "../model/useGetProfileQuery";
+import image_profile from "@/shared/assets/Blank Pfp.jpeg";
+import DialogDemo from "@/widgets/(popups)/ui/ProfileEdit";
 
 const ProfileBlock = () => {
-  const { data } = useGetProfileQuery();
-
-  console.log(data);
+  const { data, isLoading } = useGetProfileQuery();
+  if (isLoading) return <Spinner />;
 
   return (
     <div className="flex w-full">
       <Avatar
-        src="https://images.unsplash.com/photo-1502823403499-6ccfcf4fb453?&w=256&h=256&q=70&crop=focalpoint&fp-x=0.5&fp-y=0.3&fp-z=1&fit=crop"
+        src={data.avatar_url ?? image_profile}
         fallback="A"
-        className="w-40 h-40"
+        className="!w-40 !h-40"
       />
       <div className="ml-10 w-full">
         <div className="flex justify-between">
           <p className="text-2xl">{data.username}</p>
-          <Button>Follow</Button>
+          <DialogDemo />
         </div>
         <div className="flex justify-between mt-5">
           <p className="flex">

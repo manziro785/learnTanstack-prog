@@ -7,6 +7,8 @@ export interface RegisterUser {
   email: string;
   username: string;
   password: string;
+  full_name: string;
+  confirm_password: string;
 }
 
 export interface AuthResponse {

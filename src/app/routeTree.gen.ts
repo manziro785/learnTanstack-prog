@@ -17,6 +17,7 @@ import { Route as LayoutIndexRouteImport } from './routes/_layout/index'
 import { Route as LayoutSearchRouteImport } from './routes/_layout/search'
 import { Route as LayoutFollowingRouteImport } from './routes/_layout/following'
 import { Route as LayoutFollowersRouteImport } from './routes/_layout/followers'
+import { Route as LayoutCreate_postRouteImport } from './routes/_layout/create_post'
 import { Route as LayoutProfileIndexRouteImport } from './routes/_layout/profile/index'
 import { Route as LayoutPostsPostIdRouteImport } from './routes/_layout/posts/$postId'
 import { Route as LayoutCommentsPostIdRouteImport } from './routes/_layout/comments/$postId'
@@ -57,6 +58,11 @@ const LayoutFollowersRoute = LayoutFollowersRouteImport.update({
   path: '/followers',
   getParentRoute: () => LayoutRoute,
 } as any)
+const LayoutCreate_postRoute = LayoutCreate_postRouteImport.update({
+  id: '/create_post',
+  path: '/create_post',
+  getParentRoute: () => LayoutRoute,
+} as any)
 const LayoutProfileIndexRoute = LayoutProfileIndexRouteImport.update({
   id: '/profile/',
   path: '/profile/',
@@ -76,6 +82,7 @@ const LayoutCommentsPostIdRoute = LayoutCommentsPostIdRouteImport.update({
 export interface FileRoutesByFullPath {
   '/auth': typeof AuthRoute
   '/about': typeof AboutLazyRoute
+  '/create_post': typeof LayoutCreate_postRoute
   '/followers': typeof LayoutFollowersRoute
   '/following': typeof LayoutFollowingRoute
   '/search': typeof LayoutSearchRoute
@@ -87,6 +94,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/auth': typeof AuthRoute
   '/about': typeof AboutLazyRoute
+  '/create_post': typeof LayoutCreate_postRoute
   '/followers': typeof LayoutFollowersRoute
   '/following': typeof LayoutFollowingRoute
   '/search': typeof LayoutSearchRoute
@@ -100,6 +108,7 @@ export interface FileRoutesById {
   '/_layout': typeof LayoutRouteWithChildren
   '/auth': typeof AuthRoute
   '/about': typeof AboutLazyRoute
+  '/_layout/create_post': typeof LayoutCreate_postRoute
   '/_layout/followers': typeof LayoutFollowersRoute
   '/_layout/following': typeof LayoutFollowingRoute
   '/_layout/search': typeof LayoutSearchRoute
@@ -113,6 +122,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/auth'
     | '/about'
+    | '/create_post'
     | '/followers'
     | '/following'
     | '/search'
@@ -124,6 +134,7 @@ export interface FileRouteTypes {
   to:
     | '/auth'
     | '/about'
+    | '/create_post'
     | '/followers'
     | '/following'
     | '/search'
@@ -136,6 +147,7 @@ export interface FileRouteTypes {
     | '/_layout'
     | '/auth'
     | '/about'
+    | '/_layout/create_post'
     | '/_layout/followers'
     | '/_layout/following'
     | '/_layout/search'
@@ -202,6 +214,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutFollowersRouteImport
       parentRoute: typeof LayoutRoute
     }
+    '/_layout/create_post': {
+      id: '/_layout/create_post'
+      path: '/create_post'
+      fullPath: '/create_post'
+      preLoaderRoute: typeof LayoutCreate_postRouteImport
+      parentRoute: typeof LayoutRoute
+    }
     '/_layout/profile/': {
       id: '/_layout/profile/'
       path: '/profile'
@@ -227,6 +246,7 @@ declare module '@tanstack/react-router' {
 }
 
 interface LayoutRouteChildren {
+  LayoutCreate_postRoute: typeof LayoutCreate_postRoute
   LayoutFollowersRoute: typeof LayoutFollowersRoute
   LayoutFollowingRoute: typeof LayoutFollowingRoute
   LayoutSearchRoute: typeof LayoutSearchRoute
@@ -237,6 +257,7 @@ interface LayoutRouteChildren {
 }
 
 const LayoutRouteChildren: LayoutRouteChildren = {
+  LayoutCreate_postRoute: LayoutCreate_postRoute,
   LayoutFollowersRoute: LayoutFollowersRoute,
   LayoutFollowingRoute: LayoutFollowingRoute,
   LayoutSearchRoute: LayoutSearchRoute,

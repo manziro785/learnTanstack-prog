@@ -1,9 +1,11 @@
-import { Link } from "@tanstack/react-router";
-import { Home, Search, Settings, Sun, User } from "lucide-react";
+import { Link, useLocation } from "@tanstack/react-router";
+import { Home, Search, Settings, User } from "lucide-react";
 import { useState } from "react";
 
 function Sidebar() {
   const [activePath, setActivePath] = useState("/");
+  const location = useLocation();
+  const isCreatePostPage = location.pathname === "/create_post";
 
   const menuItems = [
     { icon: Home, label: "Home", href: "/" },
@@ -44,13 +46,20 @@ function Sidebar() {
             ))}
           </nav>
 
-          <div className="mt-8 pt-8 border-t border-gray-400"></div>
+          {!isCreatePostPage && (
+            <>
+              <div className="mt-8 pt-8 border-t border-gray-400"></div>
 
-          <div className="mt-4">
-            <button className="w-full bg-amber-400 hover:bg-amber-500 text-gray-900 font-semibold py-3 px-4 rounded-lg transition-all duration-200 flex items-center justify-center">
-              <span>Add New post</span>
-            </button>
-          </div>
+              <div className="mt-4">
+                <Link
+                  to="/create-post"
+                  className="w-full bg-amber-400 hover:bg-amber-500 text-gray-900 font-semibold py-3 px-4 rounded-lg transition-all duration-200 flex items-center justify-center"
+                >
+                  <span>Add New post</span>
+                </Link>
+              </div>
+            </>
+          )}
         </div>
       </aside>
     </div>

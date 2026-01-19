@@ -3,7 +3,7 @@ import { ProfileBlock } from "@/widgets/ProfileInfo/ui/ProfileBlock";
 
 const ProfilePage = () => {
   return (
-    <div className="ml-20">
+    <div className="ml-20 w-full">
       {" "}
       <ProfileBlock /> <PostsBlock />
     </div>
