@@ -7,6 +7,7 @@ import {
 } from "../model/useComment";
 import { useState } from "react";
 import { useNavigate } from "@tanstack/react-router";
+import type { CommentType } from "@/entities/comments/type/comment";
 
 interface CommentsBlockProps {
   postId: string | number;
@@ -51,7 +52,9 @@ const CommentsBlock = ({ postId }: CommentsBlockProps) => {
         {data?.length === 0 ? (
           <p className="text-center text-gray-500">No comments yet</p>
         ) : (
-          data?.map((comment) => <Comment key={comment.id} comment={comment} />)
+          data?.map((comment: CommentType) => (
+            <Comment key={comment.id} comment={comment} />
+          ))
         )}
       </div>
       <form className="flex w-full sticky bottom-5 mt-10">

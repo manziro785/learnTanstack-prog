@@ -1,4 +1,4 @@
-import { Bookmark, Heart } from "lucide-react";
+import { Bookmark } from "lucide-react";
 import type { PostProps } from "../model/post.types";
 import { formatDate } from "@/shared/lib";
 import Like from "@/entities/post/ui/Like";

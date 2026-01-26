@@ -1,6 +1,22 @@
 import { api } from "@/shared/htttp/axiosInstance";
 
-export const fetchPostsFeed = async () => {
-  const res = await api.get("/api/posts/feed");
-  return res.data.posts;
+export interface PostsFeedResponse {
+  posts: Post[];
+  page: number;
+  limit: number;
+  nextCursor: number | null; // null когда больше нет постов
+}
+
+export const fetchPostsFeed = async ({
+  pageParam,
+}: {
+  pageParam: number | undefined;
+}) => {
+  const res = await api.get<PostsFeedResponse>("/api/posts/feed", {
+    params: {
+      cursor: pageParam, // undefined при первой загрузке
+      limit: 20,
+    },
+  });
+  return res.data;
 };

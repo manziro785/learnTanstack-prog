@@ -58,7 +58,7 @@ const PostBlock = () => {
     }
 
     const formData = new FormData();
-    formData.append("image", file);
+    formData.append("avatar_url", file);
     formData.append("caption", caption);
 
     if (hashtags.trim()) {
@@ -74,7 +74,6 @@ const PostBlock = () => {
       <h2 className="text-2xl font-bold text-center mb-8">Create Post</h2>
 
       <div className="space-y-6">
-        {/* Caption */}
         <div>
           <label className="block mb-2 font-medium">Caption *</label>
           <Box className="!mt-0">
@@ -172,7 +171,6 @@ const PostBlock = () => {
           )}
         </div>
 
-        {/* Submit Button */}
         <button
           type="button"
           onClick={handleSubmit}

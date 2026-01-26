@@ -8,16 +8,10 @@ import {
   TextField,
 } from "@radix-ui/themes";
 import "@radix-ui/themes/styles.css";
-import { usePutProfileMutaion } from "../model/usePutProfileMutation";
+import { usePutProfileMutaion } from "../model/useProfile";
 import { useForm, Controller } from "react-hook-form";
 import { useEffect, useState } from "react";
-
-type ProfileFormData = {
-  username: string;
-  full_name: string;
-  bio: string;
-  avatar?: FileList;
-};
+import type { UserType } from "@/entities/user/user";
 
 const DialogDemo = () => {
   const { data } = useGetProfileQuery();
@@ -31,7 +25,7 @@ const DialogDemo = () => {
     reset,
     watch,
     formState: { errors },
-  } = useForm<ProfileFormData>({
+  } = useForm<UserType>({
     defaultValues: {
       username: "",
       full_name: "",
@@ -61,14 +55,14 @@ const DialogDemo = () => {
     }
   }, [avatarFile]);
 
-  const onSubmit = (formData: ProfileFormData) => {
+  const onSubmit = (formData: UserType) => {
     const data = new FormData();
     data.append("username", formData.username);
     data.append("full_name", formData.full_name);
     data.append("bio", formData.bio);
 
     if (formData.avatar && formData.avatar.length > 0) {
-      data.append("avatar", formData.avatar[0]);
+      data.append("avatar_url", formData.avatar[0]);
     }
 
     mutate(data, {

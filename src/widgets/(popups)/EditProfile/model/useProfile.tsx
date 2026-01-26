@@ -1,6 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
 import { editProfile } from "../api/profile";
 import { queryClient } from "../../../../app/lib/QueryClient";
+import type { UserType } from "@/entities/user/user";
 
 export const usePutProfileMutaion = () => {
   const handleSuccess = () => {
@@ -13,7 +14,7 @@ export const usePutProfileMutaion = () => {
   };
 
   return useMutation({
-    mutationFn: (data: FormData) => editProfile(data),
+    mutationFn: (data: UserType) => editProfile(data),
     onSuccess: handleSuccess,
     onError: handleError,
   });

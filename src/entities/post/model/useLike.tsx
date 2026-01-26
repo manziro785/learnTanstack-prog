@@ -1,6 +1,7 @@
 import { queryClient } from "@/app/lib/QueryClient";
 import { useMutation } from "@tanstack/react-query";
 import { dislikePost, likePost } from "../api/like";
+import type { Post } from "../type/post";
 
 export const usePostLikeMutation = (postId: number) => {
   return useMutation({
@@ -13,10 +14,10 @@ export const usePostLikeMutation = (postId: number) => {
       await queryClient.cancelQueries({ queryKey: ["posts", "feed"] });
       const previousFeed = queryClient.getQueryData(["posts", "feed"]);
 
-      queryClient.setQueryData(["posts", "feed"], (old: any) => {
+      queryClient.setQueryData(["posts", "feed"], (old: Post) => {
         if (!old || !Array.isArray(old)) return old;
 
-        return old.map((post: any) => {
+        return old.map((post: Post) => {
           if (post.id === postId) {
             return {
               ...post,
@@ -52,10 +53,10 @@ export const usePostDislikeMutation = (postId: number) => {
 
       const previousFeed = queryClient.getQueryData(["posts", "feed"]);
 
-      queryClient.setQueryData(["posts", "feed"], (old: any) => {
+      queryClient.setQueryData(["posts", "feed"], (old: Post) => {
         if (!old || !Array.isArray(old)) return old;
 
-        return old.map((post: any) => {
+        return old.map((post: Post) => {
           if (post.id === postId) {
             return {
               ...post,
