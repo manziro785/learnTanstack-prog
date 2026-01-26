@@ -6,6 +6,7 @@ import {
 } from "../model/useFollowRequests";
 import def_image from "@/shared/assets/Blank Pfp.jpeg";
 import { Link } from "@tanstack/react-router";
+import { useGetProfileQuery } from "@/widgets/ProfileInfo/model/useGetProfileQuery";
 
 const UserCard = ({ user }) => {
   const { data: followStatus, isLoading: statusLoading } = useFollowStatus(
@@ -13,8 +14,9 @@ const UserCard = ({ user }) => {
   );
   const followMutation = usePostFollowMutation(user.id);
   const unfollowMutation = usePostUnFollowMutation(user.id);
-
   const isFollowing = followStatus?.is_following ?? user.is_following ?? false;
+  const { data: my_profile } = useGetProfileQuery();
+  const isMine = my_profile?.id === user?.id;
 
   const handleFollowToggle = async () => {
     try {
@@ -32,7 +34,10 @@ const UserCard = ({ user }) => {
     followMutation.isPending || unfollowMutation.isPending || statusLoading;
 
   return (
-    <div className="w-full mb-3 border-1 border-gray-300 rounded flex justify-between bg-[#181818] p-2">
+    <div
+      key={user.id}
+      className="w-full mb-3 border-1 border-gray-300 rounded flex justify-between bg-[#181818] p-2"
+    >
       <Avatar
         src={user.avater_url ?? def_image}
         fallback="A"
@@ -44,17 +49,19 @@ const UserCard = ({ user }) => {
           <p className="text-gray-400 mt-1">@{user.username}</p>
         </Link>
         <div className="flex items-center">
-          <Button
-            onClick={handleFollowToggle}
-            disabled={isLoading}
-            className={
-              isFollowing
-                ? "!cursor-pointer !bg-gray-400"
-                : "bg-amber-400 text-black !cursor-pointer hover:bg-amber-500 duration-200"
-            }
-          >
-            {isLoading ? "Loading..." : isFollowing ? "Following" : "Follow"}
-          </Button>
+          {!isMine && (
+            <Button
+              onClick={handleFollowToggle}
+              disabled={isLoading}
+              className={
+                isFollowing
+                  ? "!cursor-pointer !bg-gray-400"
+                  : "bg-amber-400 text-black !cursor-pointer hover:bg-amber-500 duration-200"
+              }
+            >
+              {isLoading ? "Loading..." : isFollowing ? "Following" : "Follow"}
+            </Button>
+          )}
         </div>
       </div>
     </div>

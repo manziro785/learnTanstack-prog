@@ -3,7 +3,7 @@ import { fetchPostsById } from "../api/post";
 
 export const useGetPostsById = (postId: number) => {
   return useQuery({
-    queryKey: ["posts", "feed"],
+    queryKey: ["posts", "feed", postId],
     queryFn: async () => fetchPostsById(postId),
   });
 };

@@ -1,14 +1,14 @@
-import { TextArea, Box, Spinner, Button } from "@radix-ui/themes";
-import { Label } from "@radix-ui/themes/components/data-list";
+import { TextArea, Box, Spinner, TextField } from "@radix-ui/themes";
 import { useState } from "react";
 import { useCreatePost } from "../model/useCreatePostMutation";
-import { CloudUpload, X } from "lucide-react";
+import { CloudUpload, X, Hash } from "lucide-react";
 
 const PostBlock = () => {
   const { mutate, isPending } = useCreatePost();
   const [caption, setCaption] = useState("");
   const [file, setFile] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
+  const [hashtags, setHashtags] = useState("");
   const [error, setError] = useState("");
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -32,9 +32,26 @@ const PostBlock = () => {
     setPreview(null);
   };
 
+  const handleHashtagsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let value = e.target.value;
+
+    value = value.replace(/\s+/g, " ");
+
+    setHashtags(value);
+  };
+
+  const formatHashtagsForDisplay = (value: string) => {
+    if (!value.trim()) return "";
+
+    return value
+      .trim()
+      .split(/\s+/)
+      .map((tag) => (tag.startsWith("#") ? tag : `#${tag}`))
+      .join(" ");
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-
     if (!file) {
       setError("Please, choose image");
       return;
@@ -43,6 +60,12 @@ const PostBlock = () => {
     const formData = new FormData();
     formData.append("image", file);
     formData.append("caption", caption);
+
+    if (hashtags.trim()) {
+      const formattedHashtags = formatHashtagsForDisplay(hashtags);
+      formData.append("hashtags", formattedHashtags);
+    }
+
     mutate(formData);
   };
 
@@ -51,68 +74,89 @@ const PostBlock = () => {
       <h2 className="text-2xl font-bold text-center mb-8">Create Post</h2>
 
       <div className="space-y-6">
-        <Label className="mb-2">Caption *</Label>
-        <Box className="!mt-0">
-          <TextArea
-            size="3"
-            placeholder="Add Caption..."
-            value={caption}
-            onChange={(e) => setCaption(e.target.value)}
-            className="w-full"
-          />
-        </Box>
+        {/* Caption */}
+        <div>
+          <label className="block mb-2 font-medium">Caption *</label>
+          <Box className="!mt-0">
+            <TextArea
+              size="3"
+              placeholder="Add Caption..."
+              value={caption}
+              onChange={(e) => setCaption(e.target.value)}
+              className="w-full"
+            />
+          </Box>
+        </div>
+
+        <div>
+          <label className="block mb-2 font-medium">Hashtags</label>
+          <Box className="!mt-0">
+            <TextField.Root
+              size="3"
+              placeholder="travel nature photography"
+              value={hashtags}
+              onChange={handleHashtagsChange}
+              className="w-full"
+            >
+              <TextField.Slot>
+                <Hash className="w-4 h-4" />
+              </TextField.Slot>
+            </TextField.Root>
+          </Box>
+          <p className="text-xs text-gray-500 mt-1">
+            Separate hashtags with spaces (# will be added automatically)
+          </p>
+
+          {hashtags.trim() && (
+            <div className="mt-2 text-sm text-gray-400">
+              Preview: {formatHashtagsForDisplay(hashtags)}
+            </div>
+          )}
+        </div>
 
         <div className="space-y-4">
-          <Label className="block flex flex-col">
-            Image *
-            {!preview ? (
-              <div className="relative mt-2">
-                <input
-                  type="file"
-                  accept="image/*"
-                  onChange={handleFileChange}
-                  className="hidden"
-                  id="file-upload"
-                  required
-                />
-                <Label
-                  htmlFor="file-upload"
-                  className="flex flex-col !bg-gray-800 items-center justify-center w-full h-64 border-2 border-dashed border-gray-700 rounded-lg cursor-pointer hover:border-gray-400 transition-colors bg-gray-50 hover:bg-gray-100"
-                >
-                  <div className="flex flex-col items-center justify-center pt-5 pb-6">
-                    <CloudUpload className="w-[60px] h-[60px] mb-4" />
-                    <p className="mb-2 text-sm text-gray-500">
-                      <span className="font-semibold">Click to upload </span> or
-                      drag and drop here{" "}
-                    </p>
-                    <p className="text-xs text-gray-500">PNG, JPG, GIF</p>
-                  </div>
-                </Label>
-              </div>
-            ) : (
-              <div className="relative mt-2">
-                <img
-                  src={preview}
-                  alt="Preview"
-                  className="w-full h-auto max-h-96 object-contain rounded-lg border-2 border-gray-200"
-                />
-                <Button
-                  type="button"
-                  onClick={handleRemoveImage}
-                  className="absolute top-2 right-2 bg-red-500 text-white rounded-full p-2 hover:bg-red-600 transition-colors shadow-lg"
-                  title="Delete image"
-                >
-                  <X />
-                </Button>
-                <div className="mt-2 text-sm text-gray-600">
-                  <p className="font-medium">{file?.name}</p>
-                  <p className="text-xs text-gray-500">
-                    {file ? `${(file.size / 1024 / 1024).toFixed(2)} MB` : ""}
+          <label className="block font-medium">Image *</label>
+          {!preview ? (
+            <div className="relative mt-2">
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handleFileChange}
+                className="hidden"
+                id="file-upload"
+                required
+              />
+              <label
+                htmlFor="file-upload"
+                className="flex flex-col bg-gray-800 items-center justify-center w-full h-64 border-2 border-dashed border-gray-700 rounded-lg cursor-pointer hover:border-gray-400 transition-colors hover:bg-gray-700"
+              >
+                <div className="flex flex-col items-center justify-center pt-5 pb-6">
+                  <CloudUpload className="w-[60px] h-[60px] mb-4 text-gray-400" />
+                  <p className="mb-2 text-sm text-gray-400">
+                    <span className="font-semibold">Click to upload </span> or
+                    drag and drop here
                   </p>
+                  <p className="text-xs text-gray-500">PNG, JPG, GIF</p>
                 </div>
-              </div>
-            )}
-          </Label>
+              </label>
+            </div>
+          ) : (
+            <div className="relative mt-2">
+              <img
+                src={preview}
+                alt="Preview"
+                className="w-full h-auto max-h-96 object-contain rounded-lg border-2 border-gray-200"
+              />
+              <button
+                type="button"
+                onClick={handleRemoveImage}
+                className="absolute top-2 right-2 bg-red-800 text-white rounded-full p-2 hover:bg-red-600 transition-colors shadow-lg"
+                title="Delete image"
+              >
+                <X />
+              </button>
+            </div>
+          )}
 
           {error && (
             <div className="text-red-500 text-sm font-medium flex items-center gap-2">
@@ -128,11 +172,12 @@ const PostBlock = () => {
           )}
         </div>
 
+        {/* Submit Button */}
         <button
           type="button"
           onClick={handleSubmit}
           disabled={isPending}
-          className="w-full bg-amber-400 text-black py-3 px-6 rounded-lg font-medium hover:bg-amber-500 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors"
+          className="w-full flex justify-center bg-amber-400 text-black py-3 px-6 rounded-lg font-medium hover:bg-amber-500 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors"
         >
           {isPending ? <Spinner /> : "Create Post"}
         </button>

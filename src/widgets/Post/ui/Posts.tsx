@@ -3,13 +3,12 @@ import { useGetPostsFeedQuery } from "../model/usePostsQuery";
 import { Post } from "./Post";
 
 const Posts = () => {
-  const { posts, isLoading } = useGetPostsFeedQuery();
+  const { data, isLoading } = useGetPostsFeedQuery();
   if (isLoading) return <Spinner />;
-  console.log(posts);
 
   return (
     <div>
-      {posts.map((post) => (
+      {data?.map((post) => (
         <Post key={post.id} post={post} />
       ))}
     </div>

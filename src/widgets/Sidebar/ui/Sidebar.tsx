@@ -14,7 +14,7 @@ function Sidebar() {
   ];
 
   return (
-    <div className="flex min-h-screen">
+    <div className="flex min-h-screen mr-10">
       <aside className="w-64 p-4">
         <div className="sticky top-16">
           <div className="mb-8 px-4">

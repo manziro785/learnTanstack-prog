@@ -1,10 +1,9 @@
-import { Route } from "@/app/routes/_layout/profile";
+import { Route } from "@/app/routes/_auth/_layout/profile/$userId.index";
 import { useGetUserProfileQuery } from "@/shared/model/useProfileUser";
 import { useGetMyPostsQuery } from "@/widgets/ProfileInfo/model/useGetMyPostsQuery";
 import { PostsBlock } from "@/widgets/ProfileInfo/ui/PostsBlock";
 import { ProfileBlock } from "@/widgets/ProfileInfo/ui/ProfileBlock";
 import { Spinner } from "@radix-ui/themes";
-import { Outlet } from "@tanstack/react-router";
 
 const UserProfile = () => {
   const { userId } = Route.useParams();

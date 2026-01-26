@@ -7,6 +7,7 @@ import {
   usePostUnFollowMutation,
 } from "@/widgets/SearchUser/model/useFollowRequests";
 import { useGetProfileQuery } from "../model/useGetProfileQuery";
+import { Link } from "@tanstack/react-router";
 
 const ProfileBlock = ({ data }) => {
   const { data: followStatus, isLoading: statusLoading } = useFollowStatus(
@@ -65,17 +66,17 @@ const ProfileBlock = ({ data }) => {
             <p className="mr-2">{data.posts_count}</p>
             posts
           </p>
-          <p className="flex">
+          <Link to={`/profile/${data.id}/followers`} className="flex">
             <p className="mr-2">{data.followers_count}</p>
             followers
-          </p>
-          <p className="flex">
+          </Link>
+          <Link to={`/profile/${data.id}/following`} className="flex">
             <p className="mr-2">{data.following_count}</p>
             following
-          </p>
+          </Link>
         </div>
         <div className="mt-10">
-          <p className="font-bold mb-2">{data.full_name ?? "Adresan Dave"}</p>
+          <p className="font-bold mb-2">{data.full_name ?? "..."}</p>
           <p className="text-gray-500 text-sm">
             {data.bio ?? "Now Bio is empty"}
           </p>

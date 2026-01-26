@@ -1,5 +1,9 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { followStatus, followUser, unfollowUser } from "@/entities/api/follow";
+import {
+  followStatus,
+  followUser,
+  unfollowUser,
+} from "@/entities/follow/api/follow";
 import { queryClient } from "@/app/lib/QueryClient";
 
 export const useFollowStatus = (userId: number) => {
