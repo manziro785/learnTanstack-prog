@@ -1,15 +1,12 @@
-import { ArrowLeft } from "lucide-react";
 import { useState } from "react";
 import img_google from "../shared/assets/search.png";
 import type { TabType } from "@/widgets/AuthForm/model/auth";
 import AuthForm from "@/widgets/AuthForm/ui/AuthForm";
-import { useNavigate } from "@tanstack/react-router";
 import { useGoogleLogin } from "@react-oauth/google";
 import { useAuth } from "@/widgets/AuthForm/model/useAuthMutaion";
 
 export const AuthPage = () => {
   const [tab, setTab] = useState<TabType>("login");
-  const navigate = useNavigate();
   const { submitGoogleAuth, isLoading } = useAuth();
 
   const googleLogin = useGoogleLogin({
@@ -50,13 +47,6 @@ export const AuthPage = () => {
 
   return (
     <div className="min-h-screen md:h-[80vh] w-full flex items-center justify-center p-4 py-8 md:py-4">
-      <button
-        onClick={() => navigate({ to: -1 })}
-        className="absolute top-4 left-4 md:top-6 md:left-6 text-amber-500 hover:text-amber-400 active:text-amber-400 transition-colors z-20"
-      >
-        <ArrowLeft className="w-5 h-5 md:w-6 md:h-6" />
-      </button>
-
       <div className="relative z-10 w-full max-w-md">
         <div className="bg-[#1a1a1a] shadow-2xl rounded-xl flex flex-col gap-4 md:gap-6 overflow-hidden border border-gray-800">
           <h3 className="text-center mt-6 md:mt-10 text-2xl md:text-3xl font-bold text-amber-500 tracking-tight">

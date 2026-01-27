@@ -7,8 +7,9 @@ import { ProfileBlock } from "@/widgets/ProfileInfo/ui/ProfileBlock";
 
 const UserProfile = () => {
   const { userId } = Route.useParams();
-  const { data: user, isLoading: isLoadingUser } =
-    useGetUserProfileQuery(userId);
+  const { data: user, isLoading: isLoadingUser } = useGetUserProfileQuery(
+    Number(userId),
+  );
   const { data: posts, isLoading: isLoadingPosts } = useGetMyPostsQuery(
     user?.id,
   );

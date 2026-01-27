@@ -5,6 +5,7 @@ import {
   unfollowUser,
 } from "@/entities/follow/api/follow";
 import { queryClient } from "@/app/lib/QueryClient";
+import type { PostType } from "@/entities/post/type/post";
 
 export const useFollowStatus = (userId: number) => {
   return useQuery({
@@ -21,7 +22,7 @@ export const usePostFollowMutation = (userId: number) => {
       await queryClient.cancelQueries({ queryKey: ["followStatus", userId] });
       const prev = queryClient.getQueryData(["followStatus", userId]);
 
-      queryClient.setQueryData(["followStatus", userId], (old: any) => {
+      queryClient.setQueryData(["followStatus", userId], (old: PostType) => {
         if (typeof old === "object" && old !== null) {
           return { ...old, is_following: true };
         }
@@ -30,7 +31,7 @@ export const usePostFollowMutation = (userId: number) => {
 
       return { prev };
     },
-    onError: (err, variables, context) => {
+    onError: (_err, _variables, context) => {
       if (context?.prev !== undefined) {
         queryClient.setQueryData(["followStatus", userId], context.prev);
       }
@@ -53,7 +54,7 @@ export const usePostUnFollowMutation = (userId: number) => {
       await queryClient.cancelQueries({ queryKey: ["followStatus", userId] });
       const prev = queryClient.getQueryData(["followStatus", userId]);
 
-      queryClient.setQueryData(["followStatus", userId], (old: any) => {
+      queryClient.setQueryData(["followStatus", userId], (old: PostType) => {
         if (typeof old === "object" && old !== null) {
           return { ...old, is_following: false };
         }
@@ -62,7 +63,7 @@ export const usePostUnFollowMutation = (userId: number) => {
 
       return { prev };
     },
-    onError: (err, variables, context) => {
+    onError: (_err, _variables, context) => {
       if (context?.prev !== undefined) {
         queryClient.setQueryData(["followStatus", userId], context.prev);
       }

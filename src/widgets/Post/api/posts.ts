@@ -1,8 +1,8 @@
-import type { Post } from "@/entities/post/type/post";
+import type { PostType } from "@/entities/post/type/post";
 import { api } from "@/shared/htttp/axiosInstance";
 
 export interface PostsFeedResponse {
-  posts: Post[];
+  posts: PostType[];
   page: number;
   limit: number;
   nextCursor: number | null;

@@ -8,8 +8,6 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
-import { createFileRoute } from '@tanstack/react-router'
-
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as QuestRouteImport } from './routes/_quest'
 import { Route as AuthRouteImport } from './routes/_auth'
@@ -25,8 +23,6 @@ import { Route as AuthLayoutProfileUserIdIndexRouteImport } from './routes/_auth
 import { Route as AuthLayoutProfileUserIdFollowingRouteImport } from './routes/_auth/_layout/profile/$userId.following'
 import { Route as AuthLayoutProfileUserIdFollowersRouteImport } from './routes/_auth/_layout/profile/$userId.followers'
 
-const QuestAboutLazyRouteImport = createFileRoute('/_quest/about')()
-
 const QuestRoute = QuestRouteImport.update({
   id: '/_quest',
   getParentRoute: () => rootRouteImport,
@@ -35,11 +31,6 @@ const AuthRoute = AuthRouteImport.update({
   id: '/_auth',
   getParentRoute: () => rootRouteImport,
 } as any)
-const QuestAboutLazyRoute = QuestAboutLazyRouteImport.update({
-  id: '/about',
-  path: '/about',
-  getParentRoute: () => QuestRoute,
-} as any).lazy(() => import('./routes/_quest/about.lazy').then((d) => d.Route))
 const QuestAuthRoute = QuestAuthRouteImport.update({
   id: '/auth',
   path: '/auth',
@@ -100,7 +91,6 @@ const AuthLayoutProfileUserIdFollowersRoute =
 
 export interface FileRoutesByFullPath {
   '/auth': typeof QuestAuthRoute
-  '/about': typeof QuestAboutLazyRoute
   '/create_post': typeof AuthLayoutCreate_postRoute
   '/search': typeof AuthLayoutSearchRoute
   '/settings': typeof AuthLayoutSettingsRoute
@@ -113,7 +103,6 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/auth': typeof QuestAuthRoute
-  '/about': typeof QuestAboutLazyRoute
   '/create_post': typeof AuthLayoutCreate_postRoute
   '/search': typeof AuthLayoutSearchRoute
   '/settings': typeof AuthLayoutSettingsRoute
@@ -130,7 +119,6 @@ export interface FileRoutesById {
   '/_quest': typeof QuestRouteWithChildren
   '/_auth/_layout': typeof AuthLayoutRouteWithChildren
   '/_quest/auth': typeof QuestAuthRoute
-  '/_quest/about': typeof QuestAboutLazyRoute
   '/_auth/_layout/create_post': typeof AuthLayoutCreate_postRoute
   '/_auth/_layout/search': typeof AuthLayoutSearchRoute
   '/_auth/_layout/settings': typeof AuthLayoutSettingsRoute
@@ -145,7 +133,6 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/auth'
-    | '/about'
     | '/create_post'
     | '/search'
     | '/settings'
@@ -158,7 +145,6 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/auth'
-    | '/about'
     | '/create_post'
     | '/search'
     | '/settings'
@@ -174,7 +160,6 @@ export interface FileRouteTypes {
     | '/_quest'
     | '/_auth/_layout'
     | '/_quest/auth'
-    | '/_quest/about'
     | '/_auth/_layout/create_post'
     | '/_auth/_layout/search'
     | '/_auth/_layout/settings'
@@ -206,13 +191,6 @@ declare module '@tanstack/react-router' {
       fullPath: ''
       preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
-    }
-    '/_quest/about': {
-      id: '/_quest/about'
-      path: '/about'
-      fullPath: '/about'
-      preLoaderRoute: typeof QuestAboutLazyRouteImport
-      parentRoute: typeof QuestRoute
     }
     '/_quest/auth': {
       id: '/_quest/auth'
@@ -334,12 +312,10 @@ const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren)
 
 interface QuestRouteChildren {
   QuestAuthRoute: typeof QuestAuthRoute
-  QuestAboutLazyRoute: typeof QuestAboutLazyRoute
 }
 
 const QuestRouteChildren: QuestRouteChildren = {
   QuestAuthRoute: QuestAuthRoute,
-  QuestAboutLazyRoute: QuestAboutLazyRoute,
 }
 
 const QuestRouteWithChildren = QuestRoute._addFileChildren(QuestRouteChildren)

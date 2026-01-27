@@ -16,7 +16,7 @@ const Save = ({ postId, initialIsSaved }: SaveProps) => {
 
   const handleSaveToggle = () => {
     if (isSaved) {
-      unsave(postId, {
+      unsave(undefined, {
         onSuccess: () => {
           setIsSaved(false);
         },
@@ -25,7 +25,7 @@ const Save = ({ postId, initialIsSaved }: SaveProps) => {
         },
       });
     } else {
-      save(postId, {
+      save(undefined, {
         onSuccess: () => {
           setIsSaved(true);
         },

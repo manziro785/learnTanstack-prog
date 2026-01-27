@@ -1,12 +1,21 @@
+import type { PostType } from "@/entities/post/type/post";
 import { Link } from "@tanstack/react-router";
 
-const PostsBlock = ({ posts }) => {
+interface PostsBlockProps {
+  posts: { posts: PostType[] };
+}
+
+const PostsBlock = ({ posts }: PostsBlockProps) => {
   return (
     <div>
       <div className="grid grid-cols-3 gap-1 mt-10">
         {posts?.posts?.length > 0 ? (
-          posts.posts.map((post) => (
-            <Link to={`/posts/${post.id}`} key={post.id}>
+          posts.posts.map((post: PostType) => (
+            <Link
+              to="/posts/$postId"
+              params={{ postId: String(post.id) }}
+              key={post.id}
+            >
               <div className="cursor-pointer aspect-square overflow-hidden relative group">
                 <img
                   src={post.image_url}

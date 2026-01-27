@@ -1,5 +1,6 @@
 export interface UserType {
-  avater_url: string;
+  avatar_url: string;
+  avatar?: string;
   bio: string;
   created_at: string;
   email: string;

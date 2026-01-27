@@ -65,7 +65,7 @@ const DialogDemo = () => {
       data.append("avatar_url", formData.avatar[0]);
     }
 
-    mutate(data, {
+    mutate(data as any, {
       onSuccess: () => {
         setOpen(false);
         setPreview(null);
@@ -220,7 +220,7 @@ const DialogDemo = () => {
           </label>
         </Flex>
 
-        <Flex gap="2" md:gap="3" mt="4" justify="end" className="flex-wrap">
+        <Flex gap="2" mt="4" justify="end" className="flex-wrap md:gap-3">
           <Dialog.Close>
             <Button
               variant="soft"

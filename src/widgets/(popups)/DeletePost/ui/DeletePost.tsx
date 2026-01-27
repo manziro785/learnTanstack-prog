@@ -39,7 +39,7 @@ const DeletePost: React.FC<DeletePostProps> = ({ postId, onSuccess }) => {
           Are you sure you want to delete this post? This action cannot be
           undone.
         </Dialog.Description>
-        <Flex gap="2" md:gap="3" mt="4" justify="end" className="flex-wrap">
+        <Flex gap="2" mt="4" justify="end" className="flex-wrap md:gap-3">
           <Dialog.Close>
             <Button
               variant="soft"

@@ -3,11 +3,11 @@ import Like from "@/entities/post/ui/Like";
 import { Link } from "@tanstack/react-router";
 import { useGetProfileQuery } from "@/widgets/ProfileInfo/model/useProfile";
 import { DeletePost } from "@/widgets/(popups)/DeletePost/ui/DeletePost";
-import type { Post } from "@/entities/post/type/post";
 import Save from "@/entities/post/ui/Save";
 import { SpinnerWrapper } from "@/shared/ui/SpinnerWrapper";
+import type { PostProps } from "@/entities/post/type/post";
 
-const PostComment = ({ post }: Post) => {
+const PostComment = ({ post }: PostProps) => {
   const formatted = formatDate(post?.created_at);
   const { data, isLoading } = useGetProfileQuery();
   if (isLoading) return <SpinnerWrapper />;
@@ -50,7 +50,8 @@ const PostComment = ({ post }: Post) => {
               </div>
             </div>
             <Link
-              to={`/profile/${post.user_id}`}
+              to="/profile/$userId"
+              params={{ userId: String(post.id) }}
               className="text-gray-400 cursor-pointer hover:text-gray-100 duration-200 ease-in-out"
             >
               @ {post.username}

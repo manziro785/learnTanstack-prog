@@ -16,7 +16,10 @@ export default function AuthForm({ tab }: AuthFormProps) {
   const password = watch("password");
 
   const onSubmit: SubmitHandler<LoginUser | RegisterUser> = async (data) => {
-    const { confirm_password, ...submitData } = data;
+    if ("confirm_password" in data && data.confirm_password !== data.password) {
+      return alert("Passwords do not match");
+    }
+    const { confirm_password: _, ...submitData } = data;
     await submitAuth(submitData, tab);
   };
 

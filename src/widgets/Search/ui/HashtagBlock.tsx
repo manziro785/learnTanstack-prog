@@ -1,12 +1,13 @@
+import type { PostProps } from "@/entities/post/type/post";
 import { Link } from "@tanstack/react-router";
 import { Hash } from "lucide-react";
 
-const HashtagBlock = ({ post }) => {
+const HashtagBlock = ({ post }: PostProps) => {
   return (
     <>
       <div>
         {" "}
-        <Link to={`/posts/${post.id}`} key={post.id}>
+        <Link to="/posts/$postId" params={{ postId: String(post.id) }}>
           <div className="cursor-pointer aspect-square overflow-hidden relative group">
             <img
               src={post.preview_image}
@@ -20,8 +21,7 @@ const HashtagBlock = ({ post }) => {
                 #{post.tag}
               </p>
               <p className="text-white text-sm mt-1">
-                {post.posts_count}{" "}
-                {parseInt(post.posts_count) === 1 ? "post" : "posts"}
+                {post.posts_count} {post.posts_count === 1 ? "post" : "posts"}
               </p>
             </div>
           </div>

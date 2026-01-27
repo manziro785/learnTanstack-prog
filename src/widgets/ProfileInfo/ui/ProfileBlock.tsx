@@ -8,8 +8,13 @@ import {
 import { useGetProfileQuery } from "../model/useProfile";
 import { Link } from "@tanstack/react-router";
 import { DialogDemo } from "@/widgets/(popups)/EditProfile/ui/ProfileEdit";
+import type { UserType } from "@/entities/user/user";
 
-const ProfileBlock = ({ data }) => {
+interface UserTypeData {
+  data: UserType;
+}
+
+const ProfileBlock = ({ data }: UserTypeData) => {
   const { data: followStatus, isLoading: statusLoading } = useFollowStatus(
     data.id,
   );
@@ -66,11 +71,19 @@ const ProfileBlock = ({ data }) => {
             <p className="mr-2">{data.posts_count}</p>
             posts
           </p>
-          <Link to={`/profile/${data.id}/followers`} className="flex">
+          <Link
+            to="/profile/$userId/followers"
+            params={{ userId: String(data.id) }}
+            className="flex"
+          >
             <p className="mr-2">{data.followers_count}</p>
             followers
           </Link>
-          <Link to={`/profile/${data.id}/following`} className="flex">
+          <Link
+            to="/profile/$userId/following"
+            params={{ userId: String(data.id) }}
+            className="flex"
+          >
             <p className="mr-2">{data.following_count}</p>
             following
           </Link>

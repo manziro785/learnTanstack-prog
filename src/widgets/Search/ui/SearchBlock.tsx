@@ -4,6 +4,8 @@ import { UserCard } from "./UserCard";
 import { useGetUsersQuery, useSearchHashtagQuery } from "../model/useSearch";
 import { useState, useEffect } from "react";
 import { HashtagBlock } from "./HashtagBlock";
+import type { UserType } from "@/entities/user/user";
+import type { PostType } from "@/entities/post/type/post";
 
 type SearchTab = "users" | "posts";
 
@@ -92,14 +94,14 @@ const SearchBlock = () => {
           <div>
             {activeTab === "users" && (
               <div className="space-y-2 md:space-y-3">
-                {users?.map((user) => (
+                {users?.map((user: UserType) => (
                   <UserCard key={user.id} user={user} />
                 ))}
               </div>
             )}
             {activeTab === "posts" && (
               <div className="grid grid-cols-2 md:grid-cols-3 gap-1 md:gap-2 mt-4 md:mt-10">
-                {posts?.map((post) => (
+                {posts?.map((post: PostType) => (
                   <HashtagBlock key={post.id} post={post} />
                 ))}
               </div>

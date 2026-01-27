@@ -29,7 +29,6 @@ const Post = ({ post }: PostProps) => {
             {formatted}
           </p>
 
-          {/* Desktop Layout */}
           <div className="hidden md:flex justify-between w-full">
             <div className="flex gap-x-[15px]">
               <div className="flex gap-x-[5px] cursor-pointer hover:text-red-300 duration-200 ease-in-out">
@@ -40,7 +39,8 @@ const Post = ({ post }: PostProps) => {
                 />
               </div>
               <Link
-                to={`/posts/${post.id}`}
+                to="/posts/$postId"
+                params={{ postId: String(post.id) }}
                 className="flex gap-x-[5px] cursor-pointer hover:text-blue-300 duration-200 ease-in-out"
               >
                 <MessageCircle /> {post.comments_count}
@@ -50,14 +50,14 @@ const Post = ({ post }: PostProps) => {
               </div>
             </div>
             <Link
-              to={`/profile/${post.user_id}`}
+              to="/profile/$userId"
+              params={{ userId: String(post.user_id) }}
               className="text-gray-400 cursor-pointer hover:text-gray-100 duration-200 ease-in-out"
             >
               @ {post.username}
             </Link>
           </div>
 
-          {/* Mobile Layout */}
           <div className="md:hidden">
             <div className="flex items-center justify-between mb-3">
               <div className="flex gap-x-4 items-center">
@@ -69,7 +69,8 @@ const Post = ({ post }: PostProps) => {
                   />
                 </div>
                 <Link
-                  to={`/posts/${post.id}`}
+                  to="/posts/$postId"
+                  params={{ postId: String(post.id) }}
                   className="flex gap-x-1 items-center cursor-pointer active:scale-95 transition-transform"
                 >
                   <MessageCircle size={20} />
@@ -80,7 +81,8 @@ const Post = ({ post }: PostProps) => {
                 </div>
               </div>
               <Link
-                to={`/profile/${post.user_id}`}
+                to="/profile/$userId"
+                params={{ userId: String(post.user_id) }}
                 className="text-gray-400 text-sm active:text-gray-100 transition-colors"
               >
                 @ {post.username}

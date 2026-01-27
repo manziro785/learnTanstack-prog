@@ -17,7 +17,7 @@ const Like = ({ postId, initialIsLiked, initialLikesCount }: LikeProps) => {
 
   const handleLikeToggle = () => {
     if (isLiked) {
-      dislike(postId, {
+      dislike(undefined, {
         onSuccess: () => {
           setIsLiked(false);
         },
@@ -26,7 +26,7 @@ const Like = ({ postId, initialIsLiked, initialLikesCount }: LikeProps) => {
         },
       });
     } else {
-      like(postId, {
+      like(undefined, {
         onSuccess: () => {
           setIsLiked(true);
         },

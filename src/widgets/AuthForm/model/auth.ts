@@ -1,6 +1,7 @@
 export interface LoginUser {
   email: string;
   password: string;
+  confirm_password?: string;
 }
 
 export interface RegisterUser {

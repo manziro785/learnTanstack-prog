@@ -40,12 +40,16 @@ const UserCard = ({ user }: UserCardType) => {
       className="w-full mb-3 border-1 border-gray-300 rounded flex justify-between bg-[#181818] p-2"
     >
       <Avatar
-        src={user.avater_url ?? def_image}
+        src={user.avatar_url ?? def_image}
         fallback="A"
         className="w-16 h-16"
       />
       <div className="ml-8 flex justify-between items-center w-full mr-5">
-        <Link to={`/profile/${user.id}`} className="cursor-pointer">
+        <Link
+          to="/profile/$userId"
+          params={{ userId: String(user.id) }}
+          className="cursor-pointer"
+        >
           <p className="text-xl font-bold">{user.full_name ?? "User"}</p>
           <p className="text-gray-400 mt-1">@{user.username}</p>
         </Link>
