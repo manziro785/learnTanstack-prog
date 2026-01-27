@@ -1,7 +1,5 @@
 export { MainPage } from "./MainPage";
-export { PostsPage } from "./PostsPage";
 export { AuthPage } from "./AuthPage";
-export { AboutPage } from "./AboutPage";
 export { ProfilePage } from "./ProfilePage";
 export { Followers } from "./Followers";
 export { Following } from "./Following";
@@ -9,3 +7,4 @@ export { SearchPage } from "./SearchPage";
 export { CreatePostPage } from "./CreatePostPage";
 export { PostPage } from "./PostPage";
 export { UserProfile } from "./UserProfile";
+export { SettingsPage } from "./SettingsPage";

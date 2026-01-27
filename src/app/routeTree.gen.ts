@@ -17,6 +17,7 @@ import { Route as QuestAuthRouteImport } from './routes/_quest/auth'
 import { Route as AuthLayoutRouteImport } from './routes/_auth/_layout'
 import { Route as AuthLayoutIndexRouteImport } from './routes/_auth/_layout/index'
 import { Route as AuthPostsPostIdRouteImport } from './routes/_auth/posts/$postId'
+import { Route as AuthLayoutSettingsRouteImport } from './routes/_auth/_layout/settings'
 import { Route as AuthLayoutSearchRouteImport } from './routes/_auth/_layout/search'
 import { Route as AuthLayoutCreate_postRouteImport } from './routes/_auth/_layout/create_post'
 import { Route as AuthLayoutProfileIndexRouteImport } from './routes/_auth/_layout/profile/index'
@@ -58,6 +59,11 @@ const AuthPostsPostIdRoute = AuthPostsPostIdRouteImport.update({
   path: '/posts/$postId',
   getParentRoute: () => AuthRoute,
 } as any)
+const AuthLayoutSettingsRoute = AuthLayoutSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => AuthLayoutRoute,
+} as any)
 const AuthLayoutSearchRoute = AuthLayoutSearchRouteImport.update({
   id: '/search',
   path: '/search',
@@ -97,6 +103,7 @@ export interface FileRoutesByFullPath {
   '/about': typeof QuestAboutLazyRoute
   '/create_post': typeof AuthLayoutCreate_postRoute
   '/search': typeof AuthLayoutSearchRoute
+  '/settings': typeof AuthLayoutSettingsRoute
   '/posts/$postId': typeof AuthPostsPostIdRoute
   '/': typeof AuthLayoutIndexRoute
   '/profile': typeof AuthLayoutProfileIndexRoute
@@ -109,6 +116,7 @@ export interface FileRoutesByTo {
   '/about': typeof QuestAboutLazyRoute
   '/create_post': typeof AuthLayoutCreate_postRoute
   '/search': typeof AuthLayoutSearchRoute
+  '/settings': typeof AuthLayoutSettingsRoute
   '/posts/$postId': typeof AuthPostsPostIdRoute
   '/': typeof AuthLayoutIndexRoute
   '/profile': typeof AuthLayoutProfileIndexRoute
@@ -125,6 +133,7 @@ export interface FileRoutesById {
   '/_quest/about': typeof QuestAboutLazyRoute
   '/_auth/_layout/create_post': typeof AuthLayoutCreate_postRoute
   '/_auth/_layout/search': typeof AuthLayoutSearchRoute
+  '/_auth/_layout/settings': typeof AuthLayoutSettingsRoute
   '/_auth/posts/$postId': typeof AuthPostsPostIdRoute
   '/_auth/_layout/': typeof AuthLayoutIndexRoute
   '/_auth/_layout/profile/': typeof AuthLayoutProfileIndexRoute
@@ -139,6 +148,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/create_post'
     | '/search'
+    | '/settings'
     | '/posts/$postId'
     | '/'
     | '/profile'
@@ -151,6 +161,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/create_post'
     | '/search'
+    | '/settings'
     | '/posts/$postId'
     | '/'
     | '/profile'
@@ -166,6 +177,7 @@ export interface FileRouteTypes {
     | '/_quest/about'
     | '/_auth/_layout/create_post'
     | '/_auth/_layout/search'
+    | '/_auth/_layout/settings'
     | '/_auth/posts/$postId'
     | '/_auth/_layout/'
     | '/_auth/_layout/profile/'
@@ -230,6 +242,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthPostsPostIdRouteImport
       parentRoute: typeof AuthRoute
     }
+    '/_auth/_layout/settings': {
+      id: '/_auth/_layout/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof AuthLayoutSettingsRouteImport
+      parentRoute: typeof AuthLayoutRoute
+    }
     '/_auth/_layout/search': {
       id: '/_auth/_layout/search'
       path: '/search'
@@ -278,6 +297,7 @@ declare module '@tanstack/react-router' {
 interface AuthLayoutRouteChildren {
   AuthLayoutCreate_postRoute: typeof AuthLayoutCreate_postRoute
   AuthLayoutSearchRoute: typeof AuthLayoutSearchRoute
+  AuthLayoutSettingsRoute: typeof AuthLayoutSettingsRoute
   AuthLayoutIndexRoute: typeof AuthLayoutIndexRoute
   AuthLayoutProfileIndexRoute: typeof AuthLayoutProfileIndexRoute
   AuthLayoutProfileUserIdFollowersRoute: typeof AuthLayoutProfileUserIdFollowersRoute
@@ -288,6 +308,7 @@ interface AuthLayoutRouteChildren {
 const AuthLayoutRouteChildren: AuthLayoutRouteChildren = {
   AuthLayoutCreate_postRoute: AuthLayoutCreate_postRoute,
   AuthLayoutSearchRoute: AuthLayoutSearchRoute,
+  AuthLayoutSettingsRoute: AuthLayoutSettingsRoute,
   AuthLayoutIndexRoute: AuthLayoutIndexRoute,
   AuthLayoutProfileIndexRoute: AuthLayoutProfileIndexRoute,
   AuthLayoutProfileUserIdFollowersRoute: AuthLayoutProfileUserIdFollowersRoute,

@@ -1,17 +1,15 @@
 import { Spinner } from "@radix-ui/themes";
-import { useGetPostsFeedQuery } from "../model/usePostsQuery";
-import { Post } from "./Post";
+import { useGetPostsFeedQuery } from "../model/usePosts";
 import { useEffect, useRef } from "react";
+import { Post } from "./Post";
 
 const Posts = () => {
+  const observerTarget = useRef<HTMLDivElement>(null);
   const { data, isLoading, hasNextPage, fetchNextPage } =
     useGetPostsFeedQuery();
 
-  const observerTarget = useRef<HTMLDivElement>(null);
-
   useEffect(() => {
     if (!hasNextPage) return;
-
     const observer = new IntersectionObserver(([entry]) => {
       if (entry.isIntersecting) {
         fetchNextPage();
@@ -24,7 +22,7 @@ const Posts = () => {
   }, [hasNextPage, fetchNextPage]);
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-3 md:space-y-4 pb-20 md:pb-4">
       {data?.pages.flatMap((page) =>
         page.posts.map((post) => <Post key={post.id} post={post} />),
       )}
@@ -38,4 +36,4 @@ const Posts = () => {
   );
 };
 
-export default Posts;
+export { Posts };

@@ -1,9 +1,9 @@
 import { Route } from "@/app/routes/_auth/_layout/profile/$userId.index";
 import { useGetUserProfileQuery } from "@/shared/model/useProfileUser";
-import { useGetMyPostsQuery } from "@/widgets/ProfileInfo/model/useGetMyPostsQuery";
+import { SpinnerWrapper } from "@/shared/ui/SpinnerWrapper";
+import { useGetMyPostsQuery } from "@/widgets/ProfileInfo/model/usePosts";
 import { PostsBlock } from "@/widgets/ProfileInfo/ui/PostsBlock";
 import { ProfileBlock } from "@/widgets/ProfileInfo/ui/ProfileBlock";
-import { Spinner } from "@radix-ui/themes";
 
 const UserProfile = () => {
   const { userId } = Route.useParams();
@@ -12,17 +12,13 @@ const UserProfile = () => {
   const { data: posts, isLoading: isLoadingPosts } = useGetMyPostsQuery(
     user?.id,
   );
-  if (isLoadingUser || isLoadingPosts)
-    return (
-      <div className="flex justify-center items-center w-full">
-        <Spinner />
-      </div>
-    );
+
+  if (isLoadingUser || isLoadingPosts) return <SpinnerWrapper />;
 
   return (
-    <div className="ml-20 w-full">
-      {" "}
-      <ProfileBlock data={user} /> <PostsBlock posts={posts} />
+    <div className="w-full px-4 md:px-0 md:ml-20 pb-20 md:pb-4">
+      <ProfileBlock data={user} />
+      <PostsBlock posts={posts} />
     </div>
   );
 };

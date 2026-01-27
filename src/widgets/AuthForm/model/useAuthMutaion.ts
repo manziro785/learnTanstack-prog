@@ -43,7 +43,7 @@ export const useAuth = () => {
 
   const submitAuth = async (
     data: LoginUser | RegisterUser,
-    type: "login" | "register"
+    type: "login" | "register",
   ) => {
     if (type === "login") {
       return loginMutation.mutateAsync(data as LoginUser);
@@ -52,24 +52,14 @@ export const useAuth = () => {
     }
   };
 
-  const submitGoogleAuth = async (credential: string) => {
-    const { jwtDecode } = await import("jwt-decode");
-
-    interface GoogleUser {
-      email: string;
-      name: string;
-      picture?: string;
-      sub: string;
-    }
-
-    const decoded: GoogleUser = jwtDecode(credential);
-
-    return googleAuthMutation.mutateAsync({
-      email: decoded.email,
-      username: decoded.name,
-      googleId: decoded.sub,
-      picture: decoded.picture,
-    });
+  // ИЗМЕНЕНО: теперь принимаем объект с данными пользователя напрямую
+  const submitGoogleAuth = async (userData: {
+    email: string;
+    username: string;
+    googleId: string;
+    picture?: string;
+  }) => {
+    return googleAuthMutation.mutateAsync(userData);
   };
 
   return {

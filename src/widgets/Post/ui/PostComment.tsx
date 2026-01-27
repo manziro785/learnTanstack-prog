@@ -1,22 +1,30 @@
-import { Bookmark } from "lucide-react";
-import type { PostProps } from "../model/post.types";
 import { formatDate } from "@/shared/lib";
 import Like from "@/entities/post/ui/Like";
 import { Link } from "@tanstack/react-router";
+import { useGetProfileQuery } from "@/widgets/ProfileInfo/model/useProfile";
+import { DeletePost } from "@/widgets/(popups)/DeletePost/ui/DeletePost";
+import type { Post } from "@/entities/post/type/post";
+import Save from "@/entities/post/ui/Save";
+import { SpinnerWrapper } from "@/shared/ui/SpinnerWrapper";
 
-const PostComment = ({ post }: PostProps) => {
+const PostComment = ({ post }: Post) => {
   const formatted = formatDate(post?.created_at);
+  const { data, isLoading } = useGetProfileQuery();
+  if (isLoading) return <SpinnerWrapper />;
+  const isMine = data.id === post.user_id;
 
   return (
     <div
       key={post.key}
-      className="flex border-2 border-[#161616] bg-[#161616] rounded-[10px] mb-[30px]"
+      className="relative flex border-2 border-[#161616] bg-[#161616] rounded-[10px] mb-[30px]"
     >
       <img
         src={post.image_url}
-        className=" max-w-[700px] max-h-[400px] object-cover rounded-tl-[10px] rounded-bl-[10px]"
+        className=" max-w-[500px] max-h-[700px] object-cover rounded-tl-[10px] rounded-bl-[10px]"
       />
-      <div className="p-[30px] flex gap-x-[20px]">
+      {isMine && <DeletePost postId={post.id} />}
+
+      <div className="p-[30px] min-w-[20rem] flex gap-x-[20px]">
         <div className="w-full flex flex-col justify-between">
           <div>
             <p className="mt-[0px] mb-3">{post.caption}</p>
@@ -38,7 +46,7 @@ const PostComment = ({ post }: PostProps) => {
 
               <div className="flex gap-x-[5px] cursor-pointer">
                 {" "}
-                <Bookmark />
+                <Save postId={post.id} initialIsSaved={post.is_saved} />{" "}
               </div>
             </div>
             <Link

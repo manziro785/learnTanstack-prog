@@ -1,4 +1,4 @@
-import { useGetProfileQuery } from "@/widgets/ProfileInfo/model/useGetProfileQuery";
+import { useGetProfileQuery } from "@/widgets/ProfileInfo/model/useProfile";
 import {
   Button,
   Dialog,
@@ -76,24 +76,27 @@ const DialogDemo = () => {
   return (
     <Dialog.Root open={open} onOpenChange={setOpen}>
       <Dialog.Trigger>
-        <Button className="!bg-gray-400 hover:!bg-amber-400 hover:text-black duration-200 !cursor-pointer">
+        <Button className="!bg-gray-400 hover:!bg-amber-400 active:!bg-amber-400 hover:text-black duration-200 !cursor-pointer text-sm md:text-base px-3 md:px-4 py-1.5 md:py-2">
           Edit
         </Button>
       </Dialog.Trigger>
 
-      <Dialog.Content maxWidth="450px">
-        <Dialog.Title>Edit profile</Dialog.Title>
-        <Dialog.Description size="2" mb="4">
+      <Dialog.Content
+        maxWidth="450px"
+        className="max-h-[85vh] overflow-y-auto w-[calc(100vw-2rem)] md:w-full mx-4"
+      >
+        <Dialog.Title className="text-lg md:text-xl">Edit profile</Dialog.Title>
+        <Dialog.Description size="2" mb="4" className="text-sm md:text-base">
           Make changes to your profile.
         </Dialog.Description>
 
-        <Flex direction="column" gap="3">
+        <Flex direction="column" gap="3" className="pb-2">
           {preview && (
             <div className="flex justify-center mb-2">
               <img
                 src={preview ?? data.avatar_url}
                 alt="Preview"
-                className="w-24 h-24 rounded-full object-cover border-2 border-gray-300"
+                className="w-20 h-20 md:w-24 md:h-24 rounded-full object-cover border-2 border-gray-300"
               />
             </div>
           )}
@@ -103,7 +106,13 @@ const DialogDemo = () => {
             control={control}
             render={({ field: { onChange, value, ...field } }) => (
               <div>
-                <Text as="div" size="2" mb="1" weight="bold">
+                <Text
+                  as="div"
+                  size="2"
+                  mb="1"
+                  weight="bold"
+                  className="text-sm md:text-base"
+                >
                   Avatar
                 </Text>
                 <input
@@ -111,14 +120,20 @@ const DialogDemo = () => {
                   accept="image/*"
                   onChange={(e) => onChange(e.target.files)}
                   {...field}
-                  className="w-full"
+                  className="w-full text-sm md:text-base"
                 />
               </div>
             )}
           />
 
           <label>
-            <Text as="div" size="2" mb="1" weight="bold">
+            <Text
+              as="div"
+              size="2"
+              mb="1"
+              weight="bold"
+              className="text-sm md:text-base"
+            >
               Username
             </Text>
             <Controller
@@ -132,31 +147,51 @@ const DialogDemo = () => {
                 },
               }}
               render={({ field }) => (
-                <TextField.Root {...field} placeholder="Enter your username" />
+                <TextField.Root
+                  {...field}
+                  placeholder="Enter your username"
+                  className="text-sm md:text-base"
+                />
               )}
             />
             {errors.username && (
-              <Text size="1" color="red">
+              <Text size="1" color="red" className="text-xs md:text-sm mt-1">
                 {errors.username.message}
               </Text>
             )}
           </label>
 
           <label>
-            <Text as="div" size="2" mb="1" weight="bold">
+            <Text
+              as="div"
+              size="2"
+              mb="1"
+              weight="bold"
+              className="text-sm md:text-base"
+            >
               Full name
             </Text>
             <Controller
               name="full_name"
               control={control}
               render={({ field }) => (
-                <TextField.Root {...field} placeholder="Enter your full name" />
+                <TextField.Root
+                  {...field}
+                  placeholder="Enter your full name"
+                  className="text-sm md:text-base"
+                />
               )}
             />
           </label>
 
           <label>
-            <Text as="div" size="2" mb="1" weight="bold">
+            <Text
+              as="div"
+              size="2"
+              mb="1"
+              weight="bold"
+              className="text-sm md:text-base"
+            >
               Bio
             </Text>
             <Controller
@@ -169,24 +204,38 @@ const DialogDemo = () => {
                 },
               }}
               render={({ field }) => (
-                <TextArea {...field} placeholder="Enter about you" />
+                <TextArea
+                  {...field}
+                  placeholder="Enter about you"
+                  className="text-sm md:text-base"
+                  rows={3}
+                />
               )}
             />
             {errors.bio && (
-              <Text size="1" color="red">
+              <Text size="1" color="red" className="text-xs md:text-sm mt-1">
                 {errors.bio.message}
               </Text>
             )}
           </label>
         </Flex>
 
-        <Flex gap="3" mt="4" justify="end">
+        <Flex gap="2" md:gap="3" mt="4" justify="end" className="flex-wrap">
           <Dialog.Close>
-            <Button variant="soft" color="gray" type="button">
+            <Button
+              variant="soft"
+              color="gray"
+              type="button"
+              className="text-sm md:text-base px-3 md:px-4 py-1.5 md:py-2 min-w-[80px]"
+            >
               Cancel
             </Button>
           </Dialog.Close>
-          <Button onClick={handleSubmit(onSubmit)} disabled={isPending}>
+          <Button
+            onClick={handleSubmit(onSubmit)}
+            disabled={isPending}
+            className="text-sm md:text-base px-3 md:px-4 py-1.5 md:py-2 min-w-[80px]"
+          >
             {isPending ? "Saving..." : "Save"}
           </Button>
         </Flex>
@@ -195,4 +244,4 @@ const DialogDemo = () => {
   );
 };
 
-export default DialogDemo;
+export { DialogDemo };

@@ -1,4 +1,3 @@
-import { Link } from "@tanstack/react-router";
 import type { LucideIcon } from "lucide-react";
 
 interface SidebarItem {

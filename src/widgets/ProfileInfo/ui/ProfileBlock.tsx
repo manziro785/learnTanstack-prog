@@ -1,13 +1,13 @@
 import { Avatar, Button } from "@radix-ui/themes";
 import image_profile from "@/shared/assets/Blank Pfp.jpeg";
-import DialogDemo from "@/widgets/(popups)/EditProfile/ui/ProfileEdit";
 import {
   useFollowStatus,
   usePostFollowMutation,
   usePostUnFollowMutation,
-} from "@/widgets/SearchUser/model/useFollowRequests";
-import { useGetProfileQuery } from "../model/useGetProfileQuery";
+} from "@/widgets/Search/model/useFollow";
+import { useGetProfileQuery } from "../model/useProfile";
 import { Link } from "@tanstack/react-router";
+import { DialogDemo } from "@/widgets/(popups)/EditProfile/ui/ProfileEdit";
 
 const ProfileBlock = ({ data }) => {
   const { data: followStatus, isLoading: statusLoading } = useFollowStatus(

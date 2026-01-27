@@ -5,7 +5,6 @@ import { routeTree } from "./app/routeTree.gen.ts";
 const router = createRouter({ routeTree });
 import "./app/styles/global.css";
 
-// Типизация
 declare module "@tanstack/react-router" {
   interface Register {
     router: typeof router;
@@ -15,5 +14,5 @@ declare module "@tanstack/react-router" {
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <RouterProvider router={router} />
-  </StrictMode>
+  </StrictMode>,
 );

@@ -1,9 +1,9 @@
-import { PostBlock } from "@/widgets/CreatePostBlock/ui/PostBlock";
+import { CreatePostBlock } from "@/widgets";
 
 const CreatePostPage = () => {
   return (
     <>
-      <PostBlock />
+      <CreatePostBlock />
     </>
   );
 };

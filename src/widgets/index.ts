@@ -1,2 +1,15 @@
 export { Sidebar } from "./Sidebar/ui/Sidebar";
+export { UserCard } from "./Search/ui/UserCard";
+export { SearchBlock } from "./Search/ui/SearchBlock";
+export { HashtagBlock } from "./Search/ui/HashtagBlock";
+export { SavedBlock } from "./ProfileInfo/ui/SavedBlock";
+export { ProfileBlock } from "./ProfileInfo/ui/ProfileBlock";
+export { PostsBlock } from "./ProfileInfo/ui/PostsBlock";
+export { Posts } from "./Post/ui/Posts";
+export { PostComment } from "./Post/ui/PostComment";
 export { Post } from "./Post/ui/Post";
+export { CreatePostBlock } from "./CreatePostBlock/ui/CreatePostBlock";
+export { CommentsBlock } from "./CommentsBlock/ui/CommentsBlock";
+export { Comment } from "./CommentsBlock/ui/Comment";
+export { DialogDemo } from "./(popups)/EditProfile/ui/ProfileEdit";
+export { DeletePost } from "./(popups)/DeletePost/ui/DeletePost";

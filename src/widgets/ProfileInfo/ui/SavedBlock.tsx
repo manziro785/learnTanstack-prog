@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
 
-const PostsBlock = ({ posts }) => {
+const SavedBlock = ({ posts }) => {
   return (
     <div>
       <div className="grid grid-cols-3 gap-1 mt-10">
@@ -19,7 +19,7 @@ const PostsBlock = ({ posts }) => {
           ))
         ) : (
           <p className="col-span-3 font-light flex justify-center text-gray-500">
-            No posts
+            No posts saved
           </p>
         )}
       </div>
@@ -27,4 +27,4 @@ const PostsBlock = ({ posts }) => {
   );
 };
 
-export { PostsBlock };
+export { SavedBlock };
