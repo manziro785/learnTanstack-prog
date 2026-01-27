@@ -66,7 +66,7 @@ const CreatePostBlock = () => {
       formData.append("hashtags", formattedHashtags);
     }
 
-    mutate(formData);
+    mutate(formData as any);
   };
 
   return (

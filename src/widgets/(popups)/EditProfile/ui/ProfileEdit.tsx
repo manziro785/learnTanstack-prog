@@ -11,7 +11,6 @@ import "@radix-ui/themes/styles.css";
 import { usePutProfileMutaion } from "../model/useProfile";
 import { useForm, Controller } from "react-hook-form";
 import { useEffect, useState } from "react";
-import type { UserType } from "@/entities/user/user";
 
 const DialogDemo = () => {
   const { data } = useGetProfileQuery();
@@ -25,11 +24,17 @@ const DialogDemo = () => {
     reset,
     watch,
     formState: { errors },
-  } = useForm<UserType>({
+  } = useForm<{
+    username: string;
+    full_name: string;
+    bio: string;
+    avatar?: FileList;
+  }>({
     defaultValues: {
       username: "",
       full_name: "",
       bio: "",
+      avatar: undefined,
     },
   });
 
@@ -44,6 +49,7 @@ const DialogDemo = () => {
   }, [data, reset]);
 
   const avatarFile = watch("avatar");
+
   useEffect(() => {
     if (avatarFile && avatarFile.length > 0) {
       const file = avatarFile[0];
@@ -55,7 +61,12 @@ const DialogDemo = () => {
     }
   }, [avatarFile]);
 
-  const onSubmit = (formData: UserType) => {
+  const onSubmit = (formData: {
+    username: string;
+    full_name: string;
+    bio: string;
+    avatar?: FileList;
+  }) => {
     const data = new FormData();
     data.append("username", formData.username);
     data.append("full_name", formData.full_name);
@@ -76,45 +87,51 @@ const DialogDemo = () => {
   return (
     <Dialog.Root open={open} onOpenChange={setOpen}>
       <Dialog.Trigger>
-        <Button className="!bg-gray-400 hover:!bg-amber-400 active:!bg-amber-400 hover:text-black duration-200 !cursor-pointer text-sm md:text-base px-3 md:px-4 py-1.5 md:py-2">
-          Edit
-        </Button>
+        <Button>Edit</Button>
       </Dialog.Trigger>
 
       <Dialog.Content
         maxWidth="450px"
-        className="max-h-[85vh] overflow-y-auto w-[calc(100vw-2rem)] md:w-full mx-4"
+        className="p-4 md:p-6"
+        aria-describedby="dialog-description"
       >
-        <Dialog.Title className="text-lg md:text-xl">Edit profile</Dialog.Title>
-        <Dialog.Description size="2" mb="4" className="text-sm md:text-base">
+        <Dialog.Title className="text-lg md:text-xl font-bold mb-4">
+          Edit profile
+        </Dialog.Title>
+        <Dialog.Description
+          size="2"
+          mb="4"
+          id="dialog-description"
+          className="text-sm md:text-base"
+        >
           Make changes to your profile.
         </Dialog.Description>
 
-        <Flex direction="column" gap="3" className="pb-2">
+        <Flex direction="column" gap="3" className="space-y-3 md:space-y-4">
           {preview && (
-            <div className="flex justify-center mb-2">
+            <div className="flex justify-center">
               <img
-                src={preview ?? data.avatar_url}
-                alt="Preview"
-                className="w-20 h-20 md:w-24 md:h-24 rounded-full object-cover border-2 border-gray-300"
+                src={preview}
+                alt="Avatar preview"
+                className="w-20 h-20 md:w-24 md:h-24 rounded-full object-cover"
               />
             </div>
           )}
 
-          <Controller
-            name="avatar"
-            control={control}
-            render={({ field: { onChange, value, ...field } }) => (
-              <div>
-                <Text
-                  as="div"
-                  size="2"
-                  mb="1"
-                  weight="bold"
-                  className="text-sm md:text-base"
-                >
-                  Avatar
-                </Text>
+          <label className="flex flex-col gap-2">
+            <Text
+              as="div"
+              size="2"
+              mb="1"
+              weight="bold"
+              className="text-sm md:text-base"
+            >
+              Avatar
+            </Text>
+            <Controller
+              name="avatar"
+              control={control}
+              render={({ field: { value, onChange, ...field } }) => (
                 <input
                   type="file"
                   accept="image/*"
@@ -122,11 +139,11 @@ const DialogDemo = () => {
                   {...field}
                   className="w-full text-sm md:text-base"
                 />
-              </div>
-            )}
-          />
+              )}
+            />
+          </label>
 
-          <label>
+          <label className="flex flex-col gap-2">
             <Text
               as="div"
               size="2"
@@ -148,8 +165,8 @@ const DialogDemo = () => {
               }}
               render={({ field }) => (
                 <TextField.Root
-                  {...field}
                   placeholder="Enter your username"
+                  {...field}
                   className="text-sm md:text-base"
                 />
               )}
@@ -161,7 +178,7 @@ const DialogDemo = () => {
             )}
           </label>
 
-          <label>
+          <label className="flex flex-col gap-2">
             <Text
               as="div"
               size="2"
@@ -176,15 +193,15 @@ const DialogDemo = () => {
               control={control}
               render={({ field }) => (
                 <TextField.Root
-                  {...field}
                   placeholder="Enter your full name"
+                  {...field}
                   className="text-sm md:text-base"
                 />
               )}
             />
           </label>
 
-          <label>
+          <label className="flex flex-col gap-2">
             <Text
               as="div"
               size="2"
@@ -197,18 +214,11 @@ const DialogDemo = () => {
             <Controller
               name="bio"
               control={control}
-              rules={{
-                maxLength: {
-                  value: 500,
-                  message: "Bio must be less than 500 characters",
-                },
-              }}
               render={({ field }) => (
                 <TextArea
+                  placeholder="Write a short bio..."
                   {...field}
-                  placeholder="Enter about you"
                   className="text-sm md:text-base"
-                  rows={3}
                 />
               )}
             />

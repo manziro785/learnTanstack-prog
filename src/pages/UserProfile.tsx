@@ -17,7 +17,7 @@ const UserProfile = () => {
   if (isLoadingUser || isLoadingPosts) return <SpinnerWrapper />;
 
   return (
-    <div className="w-full px-4 md:px-0 md:ml-20 pb-20 md:pb-4">
+    <div className="w-full px-4 md:px-0 lg:ml-10 pb-20">
       <ProfileBlock data={user} />
       <PostsBlock posts={posts} />
     </div>

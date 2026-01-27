@@ -40,7 +40,7 @@ const ProfileBlock = ({ data }: UserTypeData) => {
     followMutation.isPending || unfollowMutation.isPending || statusLoading;
 
   return (
-    <div className="flex w-full">
+    <div className="flex w-full mt-10 ">
       <Avatar
         src={data.avatar_url ?? image_profile}
         fallback="A"
