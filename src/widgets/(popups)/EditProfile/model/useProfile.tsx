@@ -1,7 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
 import { editProfile } from "../api/profile";
 import { queryClient } from "../../../../app/lib/QueryClient";
-import type { UserType } from "@/entities/user/user";
+import type { UserType } from "@/entities/user/type/user";
 
 export const usePutProfileMutaion = () => {
   const handleSuccess = () => {

@@ -7,7 +7,7 @@ import {
 import def_image from "@/shared/assets/Blank Pfp.jpeg";
 import { Link } from "@tanstack/react-router";
 import { useGetProfileQuery } from "@/widgets/ProfileInfo/model/useProfile";
-import type { UserCardType } from "@/entities/user/user";
+import type { UserCardType } from "@/entities/user/type/user";
 
 const UserCard = ({ user }: UserCardType) => {
   const { data: followStatus, isLoading: statusLoading } = useFollowStatus(

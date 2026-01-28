@@ -57,4 +57,4 @@ const Save = ({ postId, initialIsSaved }: SaveProps) => {
   );
 };
 
-export default Save;
+export { Save };

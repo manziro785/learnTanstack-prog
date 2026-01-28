@@ -59,4 +59,4 @@ const Like = ({ postId, initialIsLiked, initialLikesCount }: LikeProps) => {
   );
 };
 
-export default Like;
+export { Like };

@@ -8,7 +8,7 @@ import {
 import { useGetProfileQuery } from "../model/useProfile";
 import { Link } from "@tanstack/react-router";
 import { DialogDemo } from "@/widgets/(popups)/EditProfile/ui/ProfileEdit";
-import type { UserType } from "@/entities/user/user";
+import type { UserType } from "@/entities/user/type/user";
 
 interface UserTypeData {
   data: UserType;

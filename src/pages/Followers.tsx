@@ -1,6 +1,6 @@
 import { Route } from "@/app/routes/_auth/_layout/profile/$userId.followers";
-import { useGetFollowersQuery } from "@/entities/follow/model/useFollow";
-import type { UserType } from "@/entities/user/user";
+import { useGetFollowersQuery } from "@/entities/user/model/useFollow";
+import type { UserType } from "@/entities/user/type/user";
 import { SpinnerWrapper } from "@/shared/ui/SpinnerWrapper";
 import { UserCard } from "@/widgets/Search/ui/UserCard";
 

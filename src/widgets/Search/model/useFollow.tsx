@@ -3,7 +3,7 @@ import {
   followStatus,
   followUser,
   unfollowUser,
-} from "@/entities/follow/api/follow";
+} from "@/entities/user/api/follow";
 import { queryClient } from "@/app/lib/QueryClient";
 import type { PostType } from "@/entities/post/type/post";
 

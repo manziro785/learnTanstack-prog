@@ -1,9 +1,9 @@
 import { formatDate } from "@/shared/lib";
-import Like from "@/entities/post/ui/Like";
+import { Like } from "@/entities/post/ui/Like";
 import { Link } from "@tanstack/react-router";
 import { useGetProfileQuery } from "@/widgets/ProfileInfo/model/useProfile";
 import { DeletePost } from "@/widgets/(popups)/DeletePost/ui/DeletePost";
-import Save from "@/entities/post/ui/Save";
+import { Save } from "@/entities/post/ui/Save";
 import { SpinnerWrapper } from "@/shared/ui/SpinnerWrapper";
 import type { PostProps } from "@/entities/post/type/post";
 

@@ -4,7 +4,7 @@ import { UserCard } from "./UserCard";
 import { useGetUsersQuery, useSearchHashtagQuery } from "../model/useSearch";
 import { useState, useEffect } from "react";
 import { HashtagBlock } from "./HashtagBlock";
-import type { UserType } from "@/entities/user/user";
+import type { UserType } from "@/entities/user/type/user";
 import type { PostType } from "@/entities/post/type/post";
 
 type SearchTab = "users" | "posts";

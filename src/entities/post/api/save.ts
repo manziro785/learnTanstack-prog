@@ -1,4 +1,4 @@
-import { api } from "@/shared/htttp/axiosInstance";
+import { api } from "@/shared/http/axiosInstance";
 
 export const savePost = async (postId: number) => {
   const res = await api.post(`/api/posts/${postId}/save`);

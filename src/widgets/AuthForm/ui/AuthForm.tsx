@@ -2,25 +2,45 @@ import { useForm, type SubmitHandler } from "react-hook-form";
 import type { AuthFormProps, LoginUser, RegisterUser } from "../model/auth";
 import { useAuth } from "../model/useAuthMutaion";
 import { Spinner } from "@radix-ui/themes";
+import { useState } from "react";
 
 export default function AuthForm({ tab }: AuthFormProps) {
   const { submitAuth } = useAuth();
+  const [serverError, setServerError] = useState<string | null>(null);
 
   const {
     register,
     handleSubmit,
     watch,
     formState: { errors, isSubmitting },
+    setError,
   } = useForm<LoginUser | RegisterUser>();
 
   const password = watch("password");
 
   const onSubmit: SubmitHandler<LoginUser | RegisterUser> = async (data) => {
-    if ("confirm_password" in data && data.confirm_password !== data.password) {
-      return alert("Passwords do not match");
+    try {
+      setServerError(null);
+      if (
+        "confirm_password" in data &&
+        data.confirm_password !== data.password
+      ) {
+        setError("confirm_password", {
+          type: "manual",
+          message: "Passwords do not match",
+        });
+        return;
+      }
+
+      const { confirm_password: _, ...submitData } = data;
+      await submitAuth(submitData, tab);
+    } catch (error) {
+      if (error instanceof Error) {
+        setServerError(error.message);
+      } else {
+        setServerError("An unexpected error occurred");
+      }
     }
-    const { confirm_password: _, ...submitData } = data;
-    await submitAuth(submitData, tab);
   };
 
   return (
@@ -29,6 +49,12 @@ export default function AuthForm({ tab }: AuthFormProps) {
         onSubmit={handleSubmit(onSubmit)}
         className="space-y-4 md:space-y-5"
       >
+        {serverError && (
+          <div className="bg-red-500/10 border border-red-500 text-red-500 px-4 py-3 rounded-lg text-sm md:text-base">
+            {serverError}
+          </div>
+        )}
+
         <div className="space-y-1.5 md:space-y-2">
           <input
             type="email"

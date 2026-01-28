@@ -1,5 +1,5 @@
 import type { PostType } from "@/entities/post/type/post";
-import { api } from "@/shared/htttp/axiosInstance";
+import { api } from "@/shared/http/axiosInstance";
 
 export interface PostsFeedResponse {
   posts: PostType[];

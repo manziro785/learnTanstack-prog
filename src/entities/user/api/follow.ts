@@ -1,4 +1,4 @@
-import { api } from "@/shared/htttp/axiosInstance";
+import { api } from "@/shared/http/axiosInstance";
 
 export const followUser = async (userId: number) => {
   const res = await api.post(`/api/users/${userId}/follow`);

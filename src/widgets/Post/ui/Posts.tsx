@@ -10,11 +10,16 @@ const Posts = () => {
 
   useEffect(() => {
     if (!hasNextPage) return;
-    const observer = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting) {
-        fetchNextPage();
-      }
-    });
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          fetchNextPage();
+        }
+      },
+      {
+        rootMargin: "100px",
+      },
+    );
 
     observer.observe(observerTarget.current!);
 

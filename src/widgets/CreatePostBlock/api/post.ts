@@ -1,4 +1,4 @@
-import { api } from "@/shared/htttp/axiosInstance";
+import { api } from "@/shared/http/axiosInstance";
 import type { PostData } from "../model/post.type";
 
 export const createPost = async (FormData: PostData) => {
