@@ -12,8 +12,6 @@ export const AuthPage = () => {
   const googleLogin = useGoogleLogin({
     onSuccess: async (tokenResponse) => {
       try {
-        console.log("Token response:", tokenResponse);
-
         const userInfoResponse = await fetch(
           "https://www.googleapis.com/oauth2/v3/userinfo",
           {
@@ -46,7 +44,7 @@ export const AuthPage = () => {
   });
 
   return (
-    <div className="min-h-screen md:h-[80vh] w-full flex items-center justify-center p-4 py-8 md:py-4">
+    <div className="h-[60vh] md:h-[80vh] w-full flex items-center justify-center p-4 py-8 md:py-4">
       <div className="relative z-10 w-full max-w-md">
         <div className="bg-[#1a1a1a] shadow-2xl rounded-xl flex flex-col gap-4 md:gap-6 overflow-hidden border border-gray-800">
           <h3 className="text-center mt-6 md:mt-10 text-2xl md:text-3xl font-bold text-amber-500 tracking-tight">

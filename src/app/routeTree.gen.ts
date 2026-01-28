@@ -11,12 +11,13 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as QuestRouteImport } from './routes/_quest'
 import { Route as AuthRouteImport } from './routes/_auth'
+import { Route as QuestIndexRouteImport } from './routes/_quest/index'
 import { Route as QuestAuthRouteImport } from './routes/_quest/auth'
 import { Route as AuthLayoutRouteImport } from './routes/_auth/_layout'
-import { Route as AuthLayoutIndexRouteImport } from './routes/_auth/_layout/index'
 import { Route as AuthPostsPostIdRouteImport } from './routes/_auth/posts/$postId'
 import { Route as AuthLayoutSettingsRouteImport } from './routes/_auth/_layout/settings'
 import { Route as AuthLayoutSearchRouteImport } from './routes/_auth/_layout/search'
+import { Route as AuthLayoutFeedRouteImport } from './routes/_auth/_layout/feed'
 import { Route as AuthLayoutCreate_postRouteImport } from './routes/_auth/_layout/create_post'
 import { Route as AuthLayoutProfileIndexRouteImport } from './routes/_auth/_layout/profile/index'
 import { Route as AuthLayoutProfileUserIdIndexRouteImport } from './routes/_auth/_layout/profile/$userId.index'
@@ -31,6 +32,11 @@ const AuthRoute = AuthRouteImport.update({
   id: '/_auth',
   getParentRoute: () => rootRouteImport,
 } as any)
+const QuestIndexRoute = QuestIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => QuestRoute,
+} as any)
 const QuestAuthRoute = QuestAuthRouteImport.update({
   id: '/auth',
   path: '/auth',
@@ -39,11 +45,6 @@ const QuestAuthRoute = QuestAuthRouteImport.update({
 const AuthLayoutRoute = AuthLayoutRouteImport.update({
   id: '/_layout',
   getParentRoute: () => AuthRoute,
-} as any)
-const AuthLayoutIndexRoute = AuthLayoutIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => AuthLayoutRoute,
 } as any)
 const AuthPostsPostIdRoute = AuthPostsPostIdRouteImport.update({
   id: '/posts/$postId',
@@ -58,6 +59,11 @@ const AuthLayoutSettingsRoute = AuthLayoutSettingsRouteImport.update({
 const AuthLayoutSearchRoute = AuthLayoutSearchRouteImport.update({
   id: '/search',
   path: '/search',
+  getParentRoute: () => AuthLayoutRoute,
+} as any)
+const AuthLayoutFeedRoute = AuthLayoutFeedRouteImport.update({
+  id: '/feed',
+  path: '/feed',
   getParentRoute: () => AuthLayoutRoute,
 } as any)
 const AuthLayoutCreate_postRoute = AuthLayoutCreate_postRouteImport.update({
@@ -91,11 +97,12 @@ const AuthLayoutProfileUserIdFollowersRoute =
 
 export interface FileRoutesByFullPath {
   '/auth': typeof QuestAuthRoute
+  '/': typeof QuestIndexRoute
   '/create_post': typeof AuthLayoutCreate_postRoute
+  '/feed': typeof AuthLayoutFeedRoute
   '/search': typeof AuthLayoutSearchRoute
   '/settings': typeof AuthLayoutSettingsRoute
   '/posts/$postId': typeof AuthPostsPostIdRoute
-  '/': typeof AuthLayoutIndexRoute
   '/profile': typeof AuthLayoutProfileIndexRoute
   '/profile/$userId/followers': typeof AuthLayoutProfileUserIdFollowersRoute
   '/profile/$userId/following': typeof AuthLayoutProfileUserIdFollowingRoute
@@ -103,11 +110,12 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/auth': typeof QuestAuthRoute
+  '/': typeof QuestIndexRoute
   '/create_post': typeof AuthLayoutCreate_postRoute
+  '/feed': typeof AuthLayoutFeedRoute
   '/search': typeof AuthLayoutSearchRoute
   '/settings': typeof AuthLayoutSettingsRoute
   '/posts/$postId': typeof AuthPostsPostIdRoute
-  '/': typeof AuthLayoutIndexRoute
   '/profile': typeof AuthLayoutProfileIndexRoute
   '/profile/$userId/followers': typeof AuthLayoutProfileUserIdFollowersRoute
   '/profile/$userId/following': typeof AuthLayoutProfileUserIdFollowingRoute
@@ -119,11 +127,12 @@ export interface FileRoutesById {
   '/_quest': typeof QuestRouteWithChildren
   '/_auth/_layout': typeof AuthLayoutRouteWithChildren
   '/_quest/auth': typeof QuestAuthRoute
+  '/_quest/': typeof QuestIndexRoute
   '/_auth/_layout/create_post': typeof AuthLayoutCreate_postRoute
+  '/_auth/_layout/feed': typeof AuthLayoutFeedRoute
   '/_auth/_layout/search': typeof AuthLayoutSearchRoute
   '/_auth/_layout/settings': typeof AuthLayoutSettingsRoute
   '/_auth/posts/$postId': typeof AuthPostsPostIdRoute
-  '/_auth/_layout/': typeof AuthLayoutIndexRoute
   '/_auth/_layout/profile/': typeof AuthLayoutProfileIndexRoute
   '/_auth/_layout/profile/$userId/followers': typeof AuthLayoutProfileUserIdFollowersRoute
   '/_auth/_layout/profile/$userId/following': typeof AuthLayoutProfileUserIdFollowingRoute
@@ -133,11 +142,12 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/auth'
+    | '/'
     | '/create_post'
+    | '/feed'
     | '/search'
     | '/settings'
     | '/posts/$postId'
-    | '/'
     | '/profile'
     | '/profile/$userId/followers'
     | '/profile/$userId/following'
@@ -145,11 +155,12 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/auth'
+    | '/'
     | '/create_post'
+    | '/feed'
     | '/search'
     | '/settings'
     | '/posts/$postId'
-    | '/'
     | '/profile'
     | '/profile/$userId/followers'
     | '/profile/$userId/following'
@@ -160,11 +171,12 @@ export interface FileRouteTypes {
     | '/_quest'
     | '/_auth/_layout'
     | '/_quest/auth'
+    | '/_quest/'
     | '/_auth/_layout/create_post'
+    | '/_auth/_layout/feed'
     | '/_auth/_layout/search'
     | '/_auth/_layout/settings'
     | '/_auth/posts/$postId'
-    | '/_auth/_layout/'
     | '/_auth/_layout/profile/'
     | '/_auth/_layout/profile/$userId/followers'
     | '/_auth/_layout/profile/$userId/following'
@@ -192,6 +204,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_quest/': {
+      id: '/_quest/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof QuestIndexRouteImport
+      parentRoute: typeof QuestRoute
+    }
     '/_quest/auth': {
       id: '/_quest/auth'
       path: '/auth'
@@ -205,13 +224,6 @@ declare module '@tanstack/react-router' {
       fullPath: ''
       preLoaderRoute: typeof AuthLayoutRouteImport
       parentRoute: typeof AuthRoute
-    }
-    '/_auth/_layout/': {
-      id: '/_auth/_layout/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof AuthLayoutIndexRouteImport
-      parentRoute: typeof AuthLayoutRoute
     }
     '/_auth/posts/$postId': {
       id: '/_auth/posts/$postId'
@@ -232,6 +244,13 @@ declare module '@tanstack/react-router' {
       path: '/search'
       fullPath: '/search'
       preLoaderRoute: typeof AuthLayoutSearchRouteImport
+      parentRoute: typeof AuthLayoutRoute
+    }
+    '/_auth/_layout/feed': {
+      id: '/_auth/_layout/feed'
+      path: '/feed'
+      fullPath: '/feed'
+      preLoaderRoute: typeof AuthLayoutFeedRouteImport
       parentRoute: typeof AuthLayoutRoute
     }
     '/_auth/_layout/create_post': {
@@ -274,9 +293,9 @@ declare module '@tanstack/react-router' {
 
 interface AuthLayoutRouteChildren {
   AuthLayoutCreate_postRoute: typeof AuthLayoutCreate_postRoute
+  AuthLayoutFeedRoute: typeof AuthLayoutFeedRoute
   AuthLayoutSearchRoute: typeof AuthLayoutSearchRoute
   AuthLayoutSettingsRoute: typeof AuthLayoutSettingsRoute
-  AuthLayoutIndexRoute: typeof AuthLayoutIndexRoute
   AuthLayoutProfileIndexRoute: typeof AuthLayoutProfileIndexRoute
   AuthLayoutProfileUserIdFollowersRoute: typeof AuthLayoutProfileUserIdFollowersRoute
   AuthLayoutProfileUserIdFollowingRoute: typeof AuthLayoutProfileUserIdFollowingRoute
@@ -285,9 +304,9 @@ interface AuthLayoutRouteChildren {
 
 const AuthLayoutRouteChildren: AuthLayoutRouteChildren = {
   AuthLayoutCreate_postRoute: AuthLayoutCreate_postRoute,
+  AuthLayoutFeedRoute: AuthLayoutFeedRoute,
   AuthLayoutSearchRoute: AuthLayoutSearchRoute,
   AuthLayoutSettingsRoute: AuthLayoutSettingsRoute,
-  AuthLayoutIndexRoute: AuthLayoutIndexRoute,
   AuthLayoutProfileIndexRoute: AuthLayoutProfileIndexRoute,
   AuthLayoutProfileUserIdFollowersRoute: AuthLayoutProfileUserIdFollowersRoute,
   AuthLayoutProfileUserIdFollowingRoute: AuthLayoutProfileUserIdFollowingRoute,
@@ -312,10 +331,12 @@ const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren)
 
 interface QuestRouteChildren {
   QuestAuthRoute: typeof QuestAuthRoute
+  QuestIndexRoute: typeof QuestIndexRoute
 }
 
 const QuestRouteChildren: QuestRouteChildren = {
   QuestAuthRoute: QuestAuthRoute,
+  QuestIndexRoute: QuestIndexRoute,
 }
 
 const QuestRouteWithChildren = QuestRoute._addFileChildren(QuestRouteChildren)

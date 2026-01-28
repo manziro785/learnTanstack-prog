@@ -8,3 +8,4 @@ export { CreatePostPage } from "./CreatePostPage";
 export { PostPage } from "./PostPage";
 export { UserProfile } from "./UserProfile";
 export { SettingsPage } from "./SettingsPage";
+export { HeroPage } from "./HeroPage";

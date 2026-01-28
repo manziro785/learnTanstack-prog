@@ -3,12 +3,12 @@ import { Home, Search, Settings, User, Plus } from "lucide-react";
 import { useState } from "react";
 
 function Sidebar() {
-  const [activePath, setActivePath] = useState("/");
+  const [activePath, setActivePath] = useState("/feed");
   const location = useLocation();
   const isCreatePostPage = location.pathname === "/create_post";
 
   const menuItems = [
-    { icon: Home, label: "Home", href: "/" },
+    { icon: Home, label: "Home", href: "/feed" },
     { icon: Search, label: "Search", href: "/search" },
     { icon: User, label: "Profile", href: "/profile" },
     { icon: Settings, label: "Settings", href: "/settings" },
@@ -20,7 +20,9 @@ function Sidebar() {
         <aside className="w-64 p-4">
           <div className="sticky top-16">
             <div className="mb-8 px-4">
-              <h2 className="text-2xl font-bold text-gray-200">InstaMat</h2>
+              <h2 className="text-2xl font-bold text-gray-200">
+                <span className="text-amber-400">I</span>nstaMat
+              </h2>
             </div>
 
             <nav className="space-y-1">

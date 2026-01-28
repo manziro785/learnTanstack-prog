@@ -17,14 +17,16 @@ const Post = ({ post }: PostProps) => {
       />
       <div className="p-4 md:p-[30px] flex gap-x-3 md:gap-x-[20px]">
         <div className="w-full">
-          <p className="mt-0 mb-2 text-sm md:text-base leading-relaxed">
-            {post.caption}
-          </p>
-          {post.hashtags && (
-            <p className="text-amber-300 text-sm md:text-base">
-              #{post.hashtags}
+          <Link to="/posts/$postId" params={{ postId: String(post.id) }}>
+            <p className="mt-0 mb-2 text-sm md:text-base leading-relaxed">
+              {post.caption}
             </p>
-          )}
+            {post.hashtags && (
+              <p className="text-amber-300 text-sm md:text-base">
+                #{post.hashtags}
+              </p>
+            )}
+          </Link>
           <p className="mb-4 md:mb-[2rem] text-gray-400 text-xs md:text-sm">
             {formatted}
           </p>

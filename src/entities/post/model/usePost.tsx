@@ -16,7 +16,7 @@ export const useDeletePostById = (postId: number) => {
   return useMutation({
     mutationFn: async () => deletePostsById(postId),
     onSuccess: () => {
-      navigate({ to: "/" });
+      navigate({ to: "/feed" });
       queryClient.invalidateQueries({ queryKey: ["posts"] });
       queryClient.invalidateQueries({ queryKey: ["posts", "feed", postId] });
     },

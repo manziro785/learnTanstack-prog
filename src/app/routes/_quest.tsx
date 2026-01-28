@@ -7,7 +7,7 @@ export const Route = createFileRoute("/_quest")({
 
     if (isAuthenticated) {
       throw redirect({
-        to: "/",
+        to: "/feed",
       });
     }
   },

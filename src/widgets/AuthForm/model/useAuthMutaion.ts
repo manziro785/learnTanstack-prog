@@ -10,7 +10,7 @@ export const useAuth = () => {
   const handleSuccess = (data: AuthResponse) => {
     useAuthStore.getState().setToken(data.token);
     localStorage.setItem("token", data.token);
-    navigate({ to: "/" });
+    navigate({ to: "/feed" });
   };
 
   const handleError = (error: unknown) => {

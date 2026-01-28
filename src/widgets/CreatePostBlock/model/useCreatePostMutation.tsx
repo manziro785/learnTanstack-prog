@@ -10,7 +10,7 @@ export const useCreatePost = () => {
     mutationFn: createPost,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["posts", "feed"] });
-      navigate({ to: "/" });
+      navigate({ to: "/feed" });
     },
   });
 };

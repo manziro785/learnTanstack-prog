@@ -48,22 +48,20 @@ const CommentsBlock = ({ postId }: CommentsBlockProps) => {
 
   return (
     <div className="min-h-screen flex flex-col pb-32 md:pb-24">
-      {/* Header with back button */}
-      <div className="sticky top-0 bg-black/95 backdrop-blur-sm z-10 px-4 md:px-6 py-4 border-b border-gray-800">
+      <div className="sticky top-0  backdrop-blur-sm z-10 px-4 md:px-6 py-4 border-b border-gray-800">
         <div className="flex items-center justify-between max-w-3xl mx-auto">
           <button
-            onClick={() => navigate({ to: "/" })}
+            onClick={() => navigate({ to: "/feed" })}
             className="text-amber-500 hover:text-amber-400 active:text-amber-400 transition-colors p-1 -ml-1"
           >
             <ArrowLeft className="w-5 h-5 md:w-6 md:h-6" />
           </button>
           <h2 className="text-xl md:text-2xl font-semibold">Comments</h2>
-          <div className="w-5 md:w-6" /> {/* Spacer for centering */}
+          <div className="w-5 md:w-6" />
         </div>
       </div>
 
-      {/* Comments list */}
-      <div className="flex-1 overflow-y-auto px-4 md:px-6 py-4 max-w-3xl mx-auto w-full">
+      <div className="flex-1 px-4 md:px-6 py-4 max-w-3xl mx-auto w-full">
         {data?.length === 0 ? (
           <p className="text-center text-gray-500 py-8">No comments yet</p>
         ) : (
@@ -75,8 +73,7 @@ const CommentsBlock = ({ postId }: CommentsBlockProps) => {
         )}
       </div>
 
-      {/* Fixed comment input form */}
-      <div className="fixed bottom-0 left-0 right-0 bg-black/95 backdrop-blur-sm border-t border-gray-800 px-4 md:px-6 py-3 md:py-4 z-20">
+      <div className="sticky bottom-0 left-0 right-0 backdrop-blur-sm border-t border-gray-800 px-4 md:px-6 py-3 md:py-4 z-20">
         <form className="flex gap-2 md:gap-3 max-w-3xl mx-auto">
           <div className="flex-1">
             <TextArea

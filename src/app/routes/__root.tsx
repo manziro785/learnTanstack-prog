@@ -1,5 +1,5 @@
 import { createRootRoute, Outlet } from "@tanstack/react-router";
-import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
+// import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 import "../styles/global.css";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { queryClient } from "../lib/QueryClient";
@@ -18,7 +18,7 @@ const RootLayout = () => (
         </GoogleOAuthProvider>
       </QueryClientProvider>
     </ThemeProvider>
-    <TanStackRouterDevtools />
+    {/* <TanStackRouterDevtools /> */}
   </>
 );
 

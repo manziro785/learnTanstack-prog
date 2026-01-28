@@ -1,6 +1,5 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { getUserProfile, logoutProfile } from "../api/user";
-import { useNavigate } from "@tanstack/react-router";
 
 export const useGetUserProfileQuery = (userId: number) => {
   return useQuery({
@@ -11,14 +10,13 @@ export const useGetUserProfileQuery = (userId: number) => {
 };
 
 export const usePostLogout = () => {
-  const navigate = useNavigate();
   return useMutation({
     mutationFn: logoutProfile,
     onSuccess: () => {
       localStorage.removeItem("token");
       localStorage.removeItem("auth_instamat");
       localStorage.clear();
-      window.location.href = "/auth";
+      window.location.href = "/";
     },
   });
 };
